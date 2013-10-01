@@ -199,16 +199,16 @@ class FestivalTest {
     assertEquals(100.0 - 10.0 + 100.0, entrada.precioDeVenta, 0.0);
   }*/
 
-  @Test
-  def comprarYDevolverEntrada() {
-    var pedido = new PedidoComun(noche1, butaca3_3A, pagoEfectivo);
-    var entrada = SistemaVentas.crearEntrada(carlos, pedido);
-    entrada.comprar();
-    assertEquals(210.0, entrada.precioDeVenta, 0.0);
-    var precioDevuelto = entrada.devolver
-    assertEquals(105.0, precioDevuelto, 0.0);
-
-  }
+//  @Test
+//  def comprarYDevolverEntrada() {
+//    var pedido = new PedidoComun(noche1, butaca3_3A, pagoEfectivo);
+//    var entrada = SistemaVentas.crearEntrada(carlos, pedido);
+//    entrada.comprar();
+//    assertEquals(210.0, entrada.precioDeVenta, 0.0);
+//    var precioDevuelto = entrada.devolver
+//    assertEquals(105.0, precioDevuelto, 0.0);
+//
+//  }
 
   /***************** PUNTO 1 - Venta en Combo ***********/
 
