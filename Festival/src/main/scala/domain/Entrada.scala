@@ -5,34 +5,42 @@ package domain
 import java.util.Date
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
+import scala.collection.immutable.Nil
+import scala.util.control.Exception
 
 @Observable
-abstract class Entrada()  extends Entity{
+abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca) {
 
-	var cliente: Cliente=_;
-	var noche: Noche=_;
-	var butaca: Butaca=_;
+	var cliente: Cliente= uncliente;
+	var tipoCliente: TipoCliente= unTipoCliente;
+	var noche: Noche= unaNoche;
+	var butaca: Butaca= unaButaca;
 	var nroFactura : Int=_;
 	var precioDeVenta: Double=_;
 	var fechaCompra: Date = new Date();
 	var devuelta: Boolean = false;
-	var tipoDePago: TipoDePago;
+
+
 	/*
 tipoDePago que tenga un objeto de una clase pagoEnEfectivos o de una clase pagoConTarjeta. 
 Que en el metodo comprar de la entrada llame a tipoDePago.comprar()
 */
 
-	
-	def comprar(cod: String = "");
+
+def comprar();
   
-	def precioFinal(): Double; 
+def anular();
+
+def anularVenta(){
+  	SistemaVentas.entradasVendidas = SistemaVentas.entradasVendidas.filter(entrada=> entrada != this)
+}	//Saca la entrada de la lista de entradas vendidas
+
+  def precioFinal(): Double; 
   
-	def imprimir(){
-  	  printf("imprimo\n");
+  def imprimir(){
 	  /*envia imprimir a la impresora fiscal*/
   }
   	
-	def realizarCompra(cod: String);
-  	
-  	def devolver(): Double;
+  def devolver(): Double;
+ 
 }

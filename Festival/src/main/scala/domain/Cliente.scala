@@ -6,14 +6,16 @@ import org.omg.DynamicAny._DynAnyFactoryStub
 import org.uqbar.commons.utils.Observable
 
 @Observable
-abstract class Cliente(){
-	var _datosLegales: String;
+class Cliente(nombre: String, apellido: String, nroTarjeta: String="", restoDatosLegales: String){
+	var _nombre:String = nombre;
+	var _apellido:String = apellido;
+	var _nroTarjeta:String = nroTarjeta;
+	var _restoDatosLegales:String = restoDatosLegales;
 
-		
-def dtoTipoPersona(valorBase: Double): Double=0;
+  
 
 override def toString(): String = {
-  return "El sucio de " + _datosLegales
+  return nombre + apellido
 }
 
 }

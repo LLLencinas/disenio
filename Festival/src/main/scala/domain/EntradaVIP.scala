@@ -2,10 +2,9 @@ package domain
 
 import java.util.Date
 
-
-class EntradaVIP(tipoPago: TipoDePago) extends Entrada {
+class EntradaVIP( uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca) extends Entrada(uncliente, unTipoCliente, null , unaButaca) {
   noche = SistemaVentas.noches.head;
-  var tipoDePago: TipoDePago=tipoPago;
+  precioDeVenta=this.precioFinal();
 
 override def devolver(): Double ={
 		//Ver bien los return algo, no le preste atencion
@@ -28,39 +27,40 @@ override def devolver(): Double ={
   	  devuelta=true;
   	  return precioDeVenta*0.5;
   	}
-  	
-override def comprar(cod: String = "") {
+
+
+override def anular() {
   
-		  tipoDePago.comprar(this,cod)
-  }
+	anularVenta
+    for(noche <- SistemaVentas.noches){
+  		  noche.butacasLibres=noche.butacasLibres.+:(butaca);
+  	  }
+  
+}
 
 
 override def precioFinal(): Double = {
-  
-		
 	var valorEntradaBase = 0.0; 
 	var valorExtraPorNoche = 0.0;
 	var descuentoTipoPersona = 0.0; 
 	var precio = 0.0; 
-	var dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche);
+	var dtoAnticipada = 0.0;
+	var subtot = 0.0;
+	var total =0.0;
 	
   for(noche <- SistemaVentas.noches){
     valorEntradaBase = butaca.precioBase();
     valorExtraPorNoche = noche.valorExtra();
-    descuentoTipoPersona = descuentoTipoPersona +cliente.dtoTipoPersona(butaca.precioBase());
-    //println("precio de la primer butaca VIP:" + 
-    //    (valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona));
-    precio = precio + valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
+    descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase);
+    precio = valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
+    dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche);
+    subtot = precio - dtoAnticipada;
+    total= total + subtot;
   }
-  println("Precio de VIP antes de descuento y recargo: " +
-      precio);
-  precio = precio - dtoAnticipada;
-  precio = precio*1.5
-  
-   return precio;
+  return total*1.5;
 }
   
-  override def realizarCompra(cod: String) {
+  override def comprar() {
     //No tendria que ser un lista contiene entrada? en vez de un "=="?
     //O tendria que sacarlo si lo verifico antes
     	if  (SistemaVentas.entradasVendidas.==(this)){

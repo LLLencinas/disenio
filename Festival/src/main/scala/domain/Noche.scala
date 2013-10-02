@@ -28,18 +28,17 @@ class Noche(unaFecha:Date,unaHora:Int, unId :Int,
 	}
 	
 	def maxCategoria():Categoria = {
-			var categorias: List[Categoria] = bandas map {unaBanda => unaBanda.categoria};
-		    
-			var maximo:Categoria = categorias maxBy {_.nivel}
-			println( "El Costo extra de  " + maximo.nivel + "es " + maximo.costoExtra );
-			return maximo
+			val categorias = bandas.map{unaBanda => unaBanda.categoria};
+			return categorias.maxBy{unaCategoria => unaCategoria.nivel};
 	}
 	
 	def cambiarCategoriaBanda(unNombreBanda:String, unId: Int, costoExtra: Int){
 	  
 	}
 
+
 	override def toString():String = {
 	  return "" + id + ""	//Si o si tengo que devolver un String
 	}
 }
+

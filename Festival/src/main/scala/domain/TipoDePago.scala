@@ -3,61 +3,54 @@
 
 
 package domain
+
 import org.uqbar.commons.utils.Observable
+import scala.collection.immutable.Nil
+import java.sql.Struct
+//import java.util.Conversion
 
 @Observable
 abstract class TipoDePago {
-	def comprar(unaEntrada:Entrada,cod:String);
+
+	def comprar(unaEntrada:Entrada): Boolean;
 }
 
 class PagoEnEfectivo extends TipoDePago(){
-  
-override def toString():String = {
-			return "Efectivo"
-	}
-	def comprar(unaEntrada:Entrada,cod: String) {
+	def comprar(unaEntrada:Entrada): Boolean = {
 	    if  (SistemaVentas.entradasVendidas.==(unaEntrada)){
-	      return
+	      return false;
 	      }
-	    unaEntrada.realizarCompra(cod);
-	    
+	    unaEntrada.comprar();
+	    return true;
 	    
   }
- }
 	
+}
 
 
 class PagoConTarjeta() extends TipoDePago(){
   var _sisCobro: SistemaDeCobro = null
   
- def comprar(unaEntrada:Entrada,cod:String) {
+ override def comprar(unaEntrada:Entrada) : Boolean = {
 	//usa la api
 	  
 		if  (SistemaVentas.entradasVendidas.==(unaEntrada)){
-	      return;	//NO encuentra la estrada en la lista de vendidas 
+	      return false;	//NO encuentra la estrada en la lista de vendidas 
 	    }
-	     print("Ingrese el apellido y nombre del comprador : " )
-	     val nombreCliente = Console.readLine
-	     print("Ingrese el numero de tarjeta del comprador : " )
-	     val numeroTarjeta =  Console.readLine
+	     val nombreCliente = unaEntrada.cliente._apellido.+(", ").+(unaEntrada.cliente._nombre);
+	     val numeroTarjeta = unaEntrada.cliente._nroTarjeta;
 	     
-	    
+	    unaEntrada.comprar();
+	     
 	     try {
-	    	 _sisCobro.cobrar(unaEntrada.precioDeVenta, nombreCliente, numeroTarjeta)
+	    	 _sisCobro.cobrar(unaEntrada.precioDeVenta, nombreCliente, numeroTarjeta);
+	    	 return true;
 		   } catch {	
-				case e: DesconexionException => SistemaVentas.agregarPagoPendiente(unaEntrada,nombreCliente,numeroTarjeta)
-				case e: ValidacionException =>  
-				  		return
+				case e: DesconexionException =>{ SistemaVentas.agregarPagoPendiente(new Pago(unaEntrada,nombreCliente,numeroTarjeta));unaEntrada.anularVenta}
+				case e: ValidacionException =>  unaEntrada.anular()
 				  		//loguear venta no realizada o informar por pantalla
 			}
-	    
-	    finally{
-  		unaEntrada.realizarCompra(cod:String);
-	    }
-  }
-  
-  override def toString(): String ={
-    return "Tarjeta"
+	    return false;
   }
   
   

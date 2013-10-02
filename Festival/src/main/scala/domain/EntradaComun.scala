@@ -2,8 +2,11 @@ package domain
 
 import java.util.Date
 
-class EntradaComun(tipoPago:TipoDePago) extends Entrada {
-  var tipoDePago: TipoDePago=tipoPago;
+
+
+class EntradaComun( uncliente: Cliente,unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca) extends Entrada(uncliente, unTipoCliente, unaNoche, unaButaca) {
+
+precioDeVenta=this.precioFinal();
 
 override def devolver(): Double ={
 		//Ver bien los return algo, no le preste atencion
@@ -25,18 +28,21 @@ override def devolver(): Double ={
   	  return precioDeVenta*0.5;
 }
 
-  	
-override def comprar(cod: String = "")  {
-  
-  
-		  tipoDePago.comprar(this,cod)
 
-}
+override def anular() {
+  
+	
+	anularVenta()	
+	noche.butacasLibres=noche.butacasLibres.+:(butaca);
+	
+  	  }  
+
+
 
  override def precioFinal(): Double = {
    var valorEntradaBase = butaca.precioBase();
    var valorExtraPorNoche = noche.valorExtra();
-   var descuentoTipoPersona = cliente.dtoTipoPersona(valorEntradaBase);
+   var descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase);
    var precio = valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
    var dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche);
    
@@ -44,16 +50,12 @@ override def comprar(cod: String = "")  {
     
   }
   
-  override def realizarCompra(cod: String) {
+  override def comprar() {
     //No tendria que ser un lista contiene entrada? en vez de un "=="?
     //O tendria que sacarlo si lo verifico antes
-    if (butaca.codigo.!=(cod)){return}
-  			if  (SistemaVentas.entradasVendidas.==(this)){
-  				return;
-  			}
-  			noche.butacasLibres= noche.butacasLibres.diff(List(butaca));
-  			SistemaVentas.entradasVendidas=SistemaVentas.entradasVendidas.+:(this);
-  			this.imprimir();
+  	noche.butacasLibres= noche.butacasLibres.diff(List(butaca));
+  	SistemaVentas.entradasVendidas=SistemaVentas.entradasVendidas.+:(this);
+  	this.imprimir();
   	
   }
  
