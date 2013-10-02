@@ -8,19 +8,20 @@ import domain.Noche
 import domain.Butaca
 import java.util.Date
 import domain.TipoDePago
+import domain.TipoCliente
 
 
 @org.uqbar.commons.utils.Observable
 class VendedorEntrada extends Serializable {
 
 	var cliente: Cliente=_;
+	var tipoCliente:TipoCliente=_
 	var noche: Noche=_;
 	var butaca: Butaca=_;
 	var nroFactura : Int=_;
 	var precioDeVenta: Double=_;
 	var fechaCompra: Date = new Date();
 	var devuelta: Boolean = false;
-	var tipoDePago: TipoDePago = _;
 	
 	
 	def precioEnPesos:String ={ return "$" + precioDeVenta}
@@ -34,8 +35,6 @@ class VendedorEntrada extends Serializable {
 	  precioDeVenta= entrada.precioDeVenta
 	  fechaCompra= entrada.fechaCompra
 	  devuelta= entrada.devuelta
-	  tipoDePago = entrada.tipoDePago
-	  
 	  
 	}
 

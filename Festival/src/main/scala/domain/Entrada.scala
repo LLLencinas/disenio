@@ -9,7 +9,7 @@ import scala.collection.immutable.Nil
 import scala.util.control.Exception
 
 @Observable
-abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca) {
+abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca) extends Entity {
 
 	var cliente: Cliente= uncliente;
 	var tipoCliente: TipoCliente= unTipoCliente;

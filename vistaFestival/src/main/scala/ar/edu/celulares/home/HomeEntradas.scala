@@ -7,20 +7,20 @@ import domain.Categoria
 import domain.Sector
 import domain.Fila
 import domain.EntradaComun
-import domain.Cliente_Mayor
 import domain.PagoEnEfectivo
 import domain.Entrada
 import org.uqbar.commons.model.CollectionBasedHome
 import org.uqbar.commons.utils.Observable
 import domain.PagoConTarjeta
 import domain.SistemaVentas
-import domain.Cliente_Jubilado
-import domain.Cliente_Menor
-import domain.Cliente_Menor
-import domain.Cliente_MenorDe12
-import domain.Cliente_Mujer
-import domain.PedidoComun
 import domain.Pedido
+import domain.TipoCliente_Mayor
+import domain.TipoCliente_Mujer
+import domain.TipoCliente_Menor
+import domain.TipoCliente_Jubilado
+import domain.TipoCliente_MenorDe12Acompaniado
+import domain.TipoCliente_MenorDe12NoAcompaniado
+import domain.Cliente
 
 @Observable
 object HomeEntradas extends CollectionBasedHome[Entrada] {
@@ -99,32 +99,37 @@ var descuentos = List[String]("mujeres", "menores de 18", "menores de 12", "jubi
 
   SistemaVentas.noches = List[Noche](noche1, noche2, noche3, noche4, noche5);
 
-  var carlos = new Cliente_Mayor("Carlos Fernandez, DNI = 17.897.364");
-  var jose = new Cliente_Jubilado("Josa Gomez, DNI = 8.897.364");
-  var facundo = new Cliente_Menor("Facundo Hernandez, DNI = 42.897.364");
-  var pablo = new Cliente_Menor("Pablo Gimenez, DNI = 37.897.364");
-  var pedrito = new Cliente_MenorDe12("Pedrito Benitez, DNI = 47.897.364", true);
-  var florencia = new Cliente_Mujer("Florencia Rodriguez, DNI = 39.897.364", true);
-
-    var pedido1 = new PedidoComun(noche1, butaca2_2A, pagoEfectivo);
-    var pedido2 = new PedidoComun(noche2, butaca8_2C, pagoEfectivo);
-    var pedido3 = new PedidoComun(noche3, butaca7_1C, pagoEfectivo);
-    var pedidos = List[Pedido](pedido1, pedido2, pedido3);
-
-    var entradas1 = SistemaVentas.crearEntradas(carlos, pedidos);
-    for (entrada <- entradas1) {
-      entrada.comprar();
-    }
-
+  /*
+ 	 * Carlos es mayor
+ 	 * Jose es jubilado
+ 	 * facundo es menor
+ 	 * pablo es menor
+ 	 * pedrito es menor acompañado
+ 	 * florencia es mujer
+ 	 */
+ 	
+ 	var clienteMayor = new TipoCliente_Mayor(); 
+ 	var clienteMujer = new TipoCliente_Mujer();
+ 	var clienteMenor = new TipoCliente_Menor();
+ 	var clienteJubilado = new TipoCliente_Jubilado();
+ 	var clienteMenor12Acompaniado = new TipoCliente_MenorDe12Acompaniado();
+ 	var clienteMenor12NoAcompaniado = new TipoCliente_MenorDe12NoAcompaniado();
+ 	
+ 	var carlos    = new Cliente("Carlos", "Fernandez", "5432524545", "|40 anios|DNI = 17.897.364|Nacionalidad = Argentino|Sexo = Masculino");
+ 	var jose      = new Cliente("Josa", "Gomez", "123324545", "|60 anios|DNI = 8.897.364|Nacionalidad = Argentino|Sexo = Masculino");
+ 	var facundo   = new Cliente("Facundo", "Hernandez", "862466754", "|15 anios|DNI = 42.897.364|Nacionalidad = Argentino|Sexo = Masculino");
+ 	var pablo     = new Cliente("Pablo", "Gimenez", "543252654", "|20 anios|DNI = 37.897.364|Nacionalidad = Argentino|Sexo = Masculino");
+ 	var pedrito   = new Cliente("Pedrito", "Benitez", "4532524545", "|11 anios|DNI = 47.897.364|Nacionalidad = Argentino|Sexo = Masculino");
+ 	var florencia = new Cliente("Florencia", "Rodriguez", "734624545", "|19 anios|DNI = 39.897.364|Nacionalidad = Argentino|Sexo = Femenino");
   
  
   def getEntradaHarco(): Entrada = {    
-		  var unaEntrada = new EntradaComun(new PagoEnEfectivo)
-		  unaEntrada.cliente= carlos
-		  unaEntrada.noche= noche1
-		  unaEntrada.nroFactura = 1
-		  unaEntrada.precioDeVenta= 200.0
-		  unaEntrada.butaca = butaca1_1A
+		  var unaEntrada = new EntradaComun(carlos,clienteMayor,noche1,butaca1_1A)
+//		  unaEntrada.cliente= carlos
+//		  unaEntrada.noche= noche1
+//		  unaEntrada.nroFactura = 1
+//		  unaEntrada.precioDeVenta= 200.0
+//		  unaEntrada.butaca = butaca1_1A
 		  return unaEntrada
   }
   
@@ -134,7 +139,7 @@ var descuentos = List[String]("mujeres", "menores de 18", "menores de 12", "jubi
   
   	override def getEntityType = classOf[Entrada]
 
-	override def createExample = new EntradaComun(null)
+	override def createExample = new EntradaComun(carlos,clienteMayor,noche1,butaca1_1A)
 
 	override def getCriterio(example: Entrada) = null
     

@@ -14,29 +14,6 @@ class FestivalTest {
   	
 	
  	@Before
- 	  class ImpostorSistemaDeCobro(estaConectado:Boolean,valida:Boolean) extends SistemaDeCobro{
-	  var _estaConectado = estaConectado;
-	  var _valida = valida;
-    
-	override def cobrar(precioDeVenta:Double, nombreCliente:String, numeroTarjeta:String){
-	  estaConectado();
-	  validar();
-	}
-	
-	
-	override def estaConectado(){
-	  if(estaConectado==false){
-	    throw new DesconexionException();
-	  }
-	}
-	
-	override def validar(){
-	  if (valida ==false){
-	    throw new ValidacionException();
-	  }
-	}
-  }
- 	
  	var descuentos = List[String]("mujeres","menores de 18","menores de 12","jubilados");
  	SistemaVentas.descuentos = descuentos;
  	SistemaVentas.pagosPendientes = List.empty[Pago];
@@ -118,7 +95,7 @@ class FestivalTest {
  	SistemaVentas.noches = List[Noche](noche1,noche2,noche3,noche4,noche5);
  	
  	/*
- 	 * Carlos es mayo
+ 	 * Carlos es mayor
  	 * Jose es jubilado
  	 * facundo es menor
  	 * pablo es menor

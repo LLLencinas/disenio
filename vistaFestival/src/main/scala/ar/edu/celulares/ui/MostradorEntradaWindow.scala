@@ -46,10 +46,7 @@ class MostradorEntradaWindow(parent: WindowOwner) extends Dialog[MostradorEntrad
     new Label(verEntradaPanel).setText("Butaca:")
     new Label(verEntradaPanel).setForeground(Color.RED)
 		.bindValueToProperty("butaca")
-		
-	new Label(verEntradaPanel).setText("Tipo de Pago:")
-    new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("tipoDePago")
+	
     
 
     //Creo un label por cada informacion que tenga de la entrada
