@@ -32,17 +32,19 @@
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 		</dependency>
-		<dependency>		
-			<groupId>org.uqbar-project</groupId>
-			<artifactId>arena-jface</artifactId>
-			<version>3.3-SNAPSHOT</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 			<version>2.3</version>
-		</dependency>     
+		</dependency> 
+
+		<dependency>
+			<groupId>org.joda</groupId>
+			<artifactId>joda-convert</artifactId>
+			<version>1.1</version>
+		</dependency> 
+                
 		
 	</dependencies>
 

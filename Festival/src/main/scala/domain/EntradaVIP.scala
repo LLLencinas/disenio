@@ -1,12 +1,13 @@
 package domain
 
-import java.util.Date
+import org.joda.time._
+import org.joda.convert._
 
-class EntradaVIP( uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca) extends Entrada(uncliente, unTipoCliente, null , unaButaca) {
+class EntradaVIP( uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca,fechaDeCompra: DateTime) extends Entrada(uncliente, unTipoCliente, null , unaButaca,fechaDeCompra) {
   noche = SistemaVentas.noches.head;
   precioDeVenta=this.precioFinal();
 
-override def devolver(): Double ={
+override def devolver(fechaDevolucion : DateTime): Double ={
 		//Ver bien los return algo, no le preste atencion
 		if (devuelta) {
 			return -1;
@@ -15,17 +16,16 @@ override def devolver(): Double ={
 			//NO encuentra la estrada en la lista de vendidas
 			return -2;
 		}
-  	  var hoy = new Date();
-  	  var noche = SistemaVentas.noches.head;
-	  if ((noche.fecha.getDate() -hoy.getDate()) > 10 ){
+		var noche = SistemaVentas.noches.head;
+		if (fechaDevolucion.isAfter(noche.fecha.plusDays(10)) ){
 	    //No se puede devolver porque estamos en los ultimos 10 dias
-	    return -3;
-	    }
-  	  for(noche <- SistemaVentas.noches){
-  		  noche.butacasLibres=noche.butacasLibres.+:(butaca);
-  	  }
-  	  devuelta=true;
-  	  return precioDeVenta*0.5;
+			return -3;
+		}
+		for(noche <- SistemaVentas.noches){
+			noche.butacasLibres=noche.butacasLibres.+:(butaca);
+		}
+  	  	devuelta=true;
+  	  	return precioDeVenta*0.5;
   	}
 
 
@@ -53,7 +53,7 @@ override def precioFinal(): Double = {
     valorExtraPorNoche = noche.valorExtra();
     descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase);
     precio = valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
-    dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche);
+    dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche,this.fechaCompra);
     subtot = precio - dtoAnticipada;
     total= total + subtot;
   }

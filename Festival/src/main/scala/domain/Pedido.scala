@@ -1,18 +1,22 @@
 package domain
 
 import org.uqbar.commons.utils.Observable
+import org.joda.time.DateTime
 
 @Observable
-class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago) {
-  	var _entradas:List[Entrada] = List.empty[Entrada];
+class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago, unaFecha: DateTime= new DateTime("2013-12-01")){
+	
+	var _entradas:List[Entrada]= List.empty[Entrada] 	
 	var _tipoPago:TipoDePago = unTipoDePago;
 	var _cliente: Cliente = unCliente;
+	var _fechaDeCompra: DateTime  = unaFecha
+
 	
 
 		
   def agregarEntradaComun(unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca, elCodigo: String=""): Boolean = {
       if (unaButaca.codigo.!=(elCodigo)){return false;}
-	  var entradaComun = new EntradaComun( _cliente, unTipoCliente, unaNoche, unaButaca)
+	  var entradaComun = new EntradaComun( _cliente, unTipoCliente, unaNoche, unaButaca, _fechaDeCompra)
 	  entradaComun.nroFactura = NroFactura.SacarNroFactura;
 	  _entradas=_entradas.+:(entradaComun);
 	  return true;
@@ -25,7 +29,7 @@ class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago) {
     	if (!noche.butacasLibres.contains(unaButaca)) {return false;} 
     }  
     if (unaButaca.codigo.!=(elCodigo)){return false;}
-	var entradaVip = new EntradaVIP(_cliente, unTipoCliente, unaButaca);
+	var entradaVip = new EntradaVIP(_cliente, unTipoCliente, unaButaca,_fechaDeCompra);
 		entradaVip.nroFactura = NroFactura.SacarNroFactura;
 	  _entradas=_entradas.+:(entradaVip);
 	  return true;

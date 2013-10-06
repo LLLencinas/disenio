@@ -2,14 +2,16 @@ package domain
 
 
 
-import java.util.Date
+import org.joda.time._
+import org.joda.convert._
+
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
 import scala.collection.immutable.Nil
 import scala.util.control.Exception
 
 @Observable
-abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca) extends Entity {
+abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca, fechaDeCompra: DateTime) extends Entity {
 
 	var cliente: Cliente= uncliente;
 	var tipoCliente: TipoCliente= unTipoCliente;
@@ -17,7 +19,7 @@ abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche
 	var butaca: Butaca= unaButaca;
 	var nroFactura : Int=_;
 	var precioDeVenta: Double=_;
-	var fechaCompra: Date = new Date();
+	var fechaCompra: DateTime = fechaDeCompra
 	var devuelta: Boolean = false;
 
 
@@ -41,6 +43,6 @@ def anularVenta(){
 	  /*envia imprimir a la impresora fiscal*/
   }
   	
-  def devolver(): Double;
+  def devolver(fechaDevolucion : DateTime): Double;
  
 }
