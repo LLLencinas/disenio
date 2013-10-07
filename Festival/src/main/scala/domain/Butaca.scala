@@ -14,6 +14,15 @@ class Butaca(unSector : Sector, unaFila:Fila,unId:Int) {
 		  return sector.precioBase + fila.precioBase;
 		}
 		
+		/**IMPORTANTE!!!!!!!!
+		 * La butaca tiene estado!!
+		 * EL codigo es propio de un festival, entonces las butacas no se 
+		 * pueden compartir entre festivales, a menos queeee
+		 * haya una coleccion de codigos y listo.
+		 * Pensarlo bien. TODO  
+		 * **/
+		
+		
 		def setCodigo(unCodigo: String){
 		  codigo=unCodigo;
 		}

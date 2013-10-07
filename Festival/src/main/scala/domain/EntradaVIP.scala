@@ -3,8 +3,9 @@ package domain
 import org.joda.time._
 import org.joda.convert._
 
-class EntradaVIP( uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca,fechaDeCompra: DateTime) extends Entrada(uncliente, unTipoCliente, null , unaButaca,fechaDeCompra) {
-  noche = SistemaVentas.noches.head;
+class EntradaVIP( uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca,fechaDeCompra: DateTime, unFestival:Festival)
+	extends Entrada(uncliente, unTipoCliente, null , unaButaca,fechaDeCompra) {
+  noche = unFestival.noches.head;
   precioDeVenta=this.precioFinal();
 
 override def devolver(fechaDevolucion : DateTime): Double ={
@@ -12,16 +13,15 @@ override def devolver(fechaDevolucion : DateTime): Double ={
 		if (devuelta) {
 			return -1;
 		}
-		if  (!SistemaVentas.entradasVendidas.contains(this)){
+		if  (!festival.entradasVendidas.contains(this)){
 			//NO encuentra la estrada en la lista de vendidas
 			return -2;
 		}
-		var noche = SistemaVentas.noches.head;
 		if (fechaDevolucion.isAfter(noche.fecha.plusDays(10)) ){
 	    //No se puede devolver porque estamos en los ultimos 10 dias
 			return -3;
 		}
-		for(noche <- SistemaVentas.noches){
+		for(noche <- festival.noches){
 			noche.butacasLibres=noche.butacasLibres.+:(butaca);
 		}
   	  	devuelta=true;
@@ -32,7 +32,7 @@ override def devolver(fechaDevolucion : DateTime): Double ={
 override def anular() {
   
 	anularVenta
-    for(noche <- SistemaVentas.noches){
+    for(noche <- festival.noches){
   		  noche.butacasLibres=noche.butacasLibres.+:(butaca);
   	  }
   
@@ -48,12 +48,12 @@ override def precioFinal(): Double = {
 	var subtot = 0.0;
 	var total =0.0;
 	
-  for(noche <- SistemaVentas.noches){
+  for(noche <- festival.noches){
     valorEntradaBase = butaca.precioBase();
     valorExtraPorNoche = noche.valorExtra();
-    descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase);
+    descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase,festival);
     precio = valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
-    dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche,this.fechaCompra);
+    dtoAnticipada = festival.calcularDescuentoAnticipa(precio, noche,this.fechaCompra);
     subtot = precio - dtoAnticipada;
     total= total + subtot;
   }
@@ -63,13 +63,13 @@ override def precioFinal(): Double = {
   override def comprar() {
     //No tendria que ser un lista contiene entrada? en vez de un "=="?
     //O tendria que sacarlo si lo verifico antes
-    	if  (SistemaVentas.entradasVendidas.==(this)){
+    	if  (festival.entradasVendidas.==(this)){
     		return ;
     	}
-    	for(noche <- SistemaVentas.noches){
+    	for(noche <- festival.noches){
     		noche.butacasLibres= noche.butacasLibres.diff(List(butaca));
     	}
-    	SistemaVentas.entradasVendidas=SistemaVentas.entradasVendidas.+:(this);
+    	festival.entradasVendidas=festival.entradasVendidas.+:(this);
     	this.imprimir(); 
     	return;
   }

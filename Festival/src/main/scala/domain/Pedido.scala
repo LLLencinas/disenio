@@ -24,12 +24,12 @@ class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago, unaFecha: DateTime= ne
   
   
 
-  def agregarEntradaVip(unTipoCliente: TipoCliente, unaButaca: Butaca, elCodigo: String=""): Boolean = {
-    for(noche <- SistemaVentas.noches){
+  def agregarEntradaVip(unTipoCliente: TipoCliente, unaButaca: Butaca,unFestival:Festival ,elCodigo: String=""): Boolean = {
+    for(noche <- unFestival.noches){
     	if (!noche.butacasLibres.contains(unaButaca)) {return false;} 
     }  
     if (unaButaca.codigo.!=(elCodigo)){return false;}
-	var entradaVip = new EntradaVIP(_cliente, unTipoCliente, unaButaca,_fechaDeCompra);
+	var entradaVip = new EntradaVIP(_cliente, unTipoCliente, unaButaca,_fechaDeCompra,unFestival);
 		entradaVip.nroFactura = NroFactura.SacarNroFactura;
 	  _entradas=_entradas.+:(entradaVip);
 	  return true;

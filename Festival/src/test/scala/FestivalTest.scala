@@ -4,7 +4,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert._
 import java.lang.Object
-
 import domain._
 import org.joda.time._
 import org.joda.convert._
@@ -14,9 +13,21 @@ class FestivalTest {
 
   @Before
   var descuentos = List[String]("mujeres", "menores de 18", "menores de 12", "jubilados");
-  SistemaVentas.descuentos = descuentos;
-  SistemaVentas.pagosPendientes = List.empty[Pago];
-  SistemaVentas.entradasVendidas = List.empty[Entrada];
+  
+  //Esto no tiene que ir
+//  SistemaVentas.descuentos = descuentos;
+//  SistemaVentas.pagosPendientes = List.empty[Pago];
+//  SistemaVentas.entradasVendidas = List.empty[Entrada];
+  
+  var noviembreFest:Festival  = new Festival()
+  noviembreFest.descuentos = descuentos
+  noviembreFest.pagosPendientes = List.empty[Pago]
+  noviembreFest.entradasVendidas = List.empty[Entrada]
+  
+  var diciembreFest:Festival = new Festival()
+  diciembreFest.descuentos = descuentos
+  diciembreFest.pagosPendientes = List.empty[Pago]
+  diciembreFest.entradasVendidas = List.empty[Entrada]
 
   var sectorA = new Sector(80.0, 'A');
   var sectorB = new Sector(60.0, 'B');
@@ -81,12 +92,19 @@ class FestivalTest {
   var losAutentiosDecadentes = new Banda(categoria3, "Los Autenticos Decadentes");
   var rollingStone = new Banda(categoria4, "Los Rolling Stone");
 
-  var noche1 = new Noche(new DateTime("2013-12-20"), 20, 1, List[Banda](losPiojos), todasLasButacas);
-  var noche2 = new Noche(new DateTime("2013-12-21"), 20, 2, List[Banda](arbol), todasLasButacas);
-  var noche3 = new Noche(new DateTime("2013-12-22"), 19, 3, List[Banda](laVelaPuerca, NTVG), todasLasButacas);
-  var noche4 = new Noche(new DateTime("2013-12-23"), 19, 4, List[Banda](callejeros, rollingStone), todasLasButacas);
-  var noche5 = new Noche(new DateTime("2013-12-24"), 21, 5, List[Banda](losAutentiosDecadentes), todasLasButacas);
-  SistemaVentas.noches = List[Noche](noche1, noche2, noche3, noche4, noche5);
+  var noche1 = new Noche(noviembreFest,new DateTime("2013-12-20"), 20, 1, List[Banda](losPiojos), todasLasButacas);
+  var noche2 = new Noche(noviembreFest,new DateTime("2013-12-21"), 20, 2, List[Banda](arbol), todasLasButacas);
+  var noche3 = new Noche(noviembreFest,new DateTime("2013-12-22"), 19, 3, List[Banda](laVelaPuerca, NTVG), todasLasButacas);
+  var noche4 = new Noche(noviembreFest,new DateTime("2013-12-23"), 19, 4, List[Banda](callejeros, rollingStone), todasLasButacas);
+  var noche5 = new Noche(noviembreFest,new DateTime("2013-12-24"), 21, 5, List[Banda](losAutentiosDecadentes), todasLasButacas);
+  noviembreFest.noches = List[Noche](noche1, noche2, noche3, noche4, noche5);
+  
+  var nocheUno = new Noche(diciembreFest,new DateTime("2013-12-26"), 20, 1, List[Banda](losPiojos), todasLasButacas);
+  var nocheDos = new Noche(diciembreFest,new DateTime("2013-12-27"), 20, 2, List[Banda](arbol), todasLasButacas);
+  var nocheTres = new Noche(diciembreFest,new DateTime("2013-12-28"), 19, 3, List[Banda](laVelaPuerca, NTVG), todasLasButacas);
+  var nocheCuatro = new Noche(diciembreFest,new DateTime("2013-12-29"), 19, 4, List[Banda](callejeros, rollingStone), todasLasButacas);
+  var nocheCinco = new Noche(diciembreFest,new DateTime("2013-12-30"), 21, 5, List[Banda](losAutentiosDecadentes), todasLasButacas);
+  diciembreFest.noches = List[Noche](noche1, noche2, noche3, noche4, noche5);
 
   /*
  	 * Carlos es mayor
@@ -104,12 +122,12 @@ class FestivalTest {
   var clienteMenor12Acompaniado = new TipoCliente_MenorDe12Acompaniado();
   var clienteMenor12NoAcompaniado = new TipoCliente_MenorDe12NoAcompaniado();
 
-  var carlos = new Cliente("Carlos", "Fernandez", "5432524545", "|40 anios|DNI = 17.897.364|Nacionalidad = Argentino|Sexo = Masculino");
-  var jose = new Cliente("Josa", "Gomez", "123324545", "|60 anios|DNI = 8.897.364|Nacionalidad = Argentino|Sexo = Masculino");
-  var facundo = new Cliente("Facundo", "Hernandez", "862466754", "|15 anios|DNI = 42.897.364|Nacionalidad = Argentino|Sexo = Masculino");
-  var pablo = new Cliente("Pablo", "Gimenez", "543252654", "|20 anios|DNI = 37.897.364|Nacionalidad = Argentino|Sexo = Masculino");
-  var pedrito = new Cliente("Pedrito", "Benitez", "4532524545", "|11 anios|DNI = 47.897.364|Nacionalidad = Argentino|Sexo = Masculino");
-  var florencia = new Cliente("Florencia", "Rodriguez", "734624545", "|19 anios|DNI = 39.897.364|Nacionalidad = Argentino|Sexo = Femenino");
+  var carlos = new Cliente("Carlos", "Fernandez", "5432524545", "|40 anios|DNI = 17.897.364");
+  var jose = new Cliente("Josa", "Gomez", "123324545", "|60 anios|DNI = 8.897.364");
+  var facundo = new Cliente("Facundo", "Hernandez", "862466754", "|15 anios|DNI = 42.897.364");
+  var pablo = new Cliente("Pablo", "Gimenez", "543252654", "|20 anios|DNI = 37.897.364");
+  var pedrito = new Cliente("Pedrito", "Benitez", "4532524545", "|11 anios|DNI = 47.897.364");
+  var florencia = new Cliente("Florencia", "Rodriguez", "734624545", "|19 anios|DNI = 39.897.364");
 
   @Test
   def cantidadDeButacasLibresTodasLasNoches() {
@@ -165,7 +183,6 @@ class FestivalTest {
 
     assertEquals(230.0, pedido.precioNeto(), 0.0);
   }
-
   @Test
   def compraDeEntradaClienteJubiladoNoche2Butaca6() {
     var pedido = new Pedido(jose, pagoEfectivo);
@@ -199,12 +216,9 @@ class FestivalTest {
   @Test
   def compraDeEntradaAnticipada_ClienteMayorNoche5Butaca5() {
      var pedido = new Pedido(carlos,pagoEfectivo,new DateTime("2013-11-09"));
-     
      pedido.agregarEntradaComun(clienteMayor,noche5, butaca5_2B);
-     
      pedido.comprar();
      
- 
      assertEquals(100.0 - 20.0 + 100.0, pedido._entradas.head.precioDeVenta, 0.0);
   }
 
@@ -249,16 +263,20 @@ class FestivalTest {
   }
 
   /***************** PUNTO 5 - Entradas VIP ************/
-
+  
+  /*
+   * Mando el festival por parametro porque sino no puedo conocer las noches, buscar otra forma, TODO
+   */
   @Test
   def compraDeEntradaVIP_ClienteMayorButaca17() {
     var pedido = new Pedido(carlos, pagoEfectivo);
-    pedido.agregarEntradaVip(clienteMayor, butaca17_3C);
+    pedido.agregarEntradaVip(clienteMayor, butaca17_3C,noviembreFest);
     pedido.comprar();
     assertEquals(1275.0, pedido.precioAcumulado(), 0.0);
     //Si tenemos en cuenta que es mayor a 1000 y debemos aplicar el descuento queda menos dinero
     assertEquals(1147.5, pedido.precioNeto(), 0.0)
   }
+ 
 
   /***************** PUNTO 3 - Categorias De Bandas  ************/
   @Test
@@ -290,23 +308,23 @@ class FestivalTest {
     //Para que el festival no tenga el descuento de mujeres, lo saco e la lista de descuentos
     //Y despues lo vuelvo a meter para que no haya problemas con los otros tests
 
-    SistemaVentas.sacarDescuento("mujeres");
+    noviembreFest.sacarDescuento("mujeres");
     var pedido = new Pedido(florencia, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMujer, noche1, butaca20_3C);
     pedido.comprar();
     assertEquals(70.0 - 0.0 + 100.0, pedido.precioNeto(), 0.0);
-    SistemaVentas.agregarDescuento("mujeres");
+    noviembreFest.agregarDescuento("mujeres");
   }
 
   def compraDeEntrada_ClienteJubiladoNoche4Butaca21_SinDescuento() {
     //Para que el festival no tenga el descuento de mujeres, lo saco e la lista de descuentos
     //Y despues lo vuelvo a meter para que no haya problema	s con los otros tests
-    SistemaVentas.sacarDescuento("jubilados");
+    noviembreFest.sacarDescuento("jubilados");
     var pedido = new Pedido(jose, pagoEfectivo);
     pedido.agregarEntradaComun(clienteJubilado, noche4, butaca21_3C);
     pedido.comprar();
     assertEquals(70.0 - 0.0 + 200.0, pedido.precioNeto(), 0.0);
-    SistemaVentas.agregarDescuento("jubilados");
+    noviembreFest.agregarDescuento("jubilados");
   }
 
   /*Hay que cambiar estos tests porque ya no podemos acceder a la entrada para ver si esta contenida en el sistema*/
@@ -323,7 +341,7 @@ class FestivalTest {
 
     pedido.agregarEntradaComun(clienteJubilado, noche4, butaca6_3B, "Codigo_de_Prueba");
     pedido.comprar();
-    assert(SistemaVentas.entradasVendidas.contains(pedido._entradas.head));
+    assert(noviembreFest.entradasVendidas.contains(pedido._entradas.head));
     assert(!noche2.butacasLibres.contains(pedido._entradas.head.butaca));
   }
 
@@ -338,7 +356,7 @@ class FestivalTest {
 
     pedidoValidaYConecta.comprar();
 
-    assert(SistemaVentas.entradasVendidas.contains(pedidoValidaYConecta._entradas.head));
+    assert(noviembreFest.entradasVendidas.contains(pedidoValidaYConecta._entradas.head));
     assert(!noche1.butacasLibres.contains(pedidoValidaYConecta._entradas.head.butaca))
   }
 
@@ -351,7 +369,7 @@ class FestivalTest {
 
     pedidoNoValidaYConecta.comprar();
 
-    assert(!SistemaVentas.entradasVendidas.contains(pedidoNoValidaYConecta._entradas.head));
+    assert(!noviembreFest.entradasVendidas.contains(pedidoNoValidaYConecta._entradas.head));
     assert(noche1.butacasLibres.contains(pedidoNoValidaYConecta._entradas.head.butaca))
   }
 
@@ -364,14 +382,14 @@ class FestivalTest {
 
     pedidoValidaYNoConecta.comprar();
 
-    assert(!SistemaVentas.entradasVendidas.contains(pedidoValidaYNoConecta._entradas.head));
+    assert(!noviembreFest.entradasVendidas.contains(pedidoValidaYNoConecta._entradas.head));
     assert(!noche1.butacasLibres.contains(pedidoValidaYNoConecta._entradas.head.butaca))
 
     //Si el usuario intenta pagar pero el servicio esta desconectado, se pone en un
     //lista de pendientes pero la entrada figura como comprada, esto es porque si luego
     //se cobra correctamente la entrada deberia seguir vendida
 
-    assertEquals(1, SistemaVentas.pagosPendientes.length);
+    assertEquals(1, noviembreFest.pagosPendientes.length);
   }
 
   @Test
@@ -383,12 +401,27 @@ class FestivalTest {
 
     pedidoNoValidaYNoConecta.comprar();
 
-    assert(!SistemaVentas.entradasVendidas.contains(pedidoNoValidaYNoConecta._entradas.head));
+    assert(!noviembreFest.entradasVendidas.contains(pedidoNoValidaYNoConecta._entradas.head));
     assert(!noche1.butacasLibres.contains(pedidoNoValidaYNoConecta._entradas.head.butaca))
 
-    assertEquals(1, SistemaVentas.pagosPendientes.length);
+    assertEquals(1, noviembreFest.pagosPendientes.length);
   }
+  
+  
+  /**
+   * Tests para un festival nuevo
+ **/
+    @Test
+  def compraDeEntrada_ClienteMujerNoche3Butaca19DiciembreFest() {
+    var pedido = new Pedido(florencia, pagoEfectivo);
+    pedido.agregarEntradaComun(clienteMujer, nocheTres, butaca19_3C);
+    pedido.comprar();
+    assertEquals(70.0 - 14.0 + 50.0, pedido.precioNeto(), 0.0);
+  }
+  
+  
+  
+  
 }
-
 
 

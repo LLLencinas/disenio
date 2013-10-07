@@ -14,7 +14,7 @@ override def devolver(fechaDevolucion : DateTime): Double ={
 		if (devuelta) {
 			return -1;
 		}
-		if  (!SistemaVentas.entradasVendidas.contains(this)){
+		if  (!festival.entradasVendidas.contains(this)){
 			//NO encuentra la estrada en la lista de vendidas
 			return -2;
 		}
@@ -43,9 +43,9 @@ override def anular() {
  override def precioFinal(): Double = {
    var valorEntradaBase = butaca.precioBase();
    var valorExtraPorNoche = noche.valorExtra();
-   var descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase);
+   var descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase,festival);
    var precio = valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
-   var dtoAnticipada = SistemaVentas.calcularDescuentoAnticipa(precio, noche,this.fechaCompra);
+   var dtoAnticipada = festival.calcularDescuentoAnticipa(precio, noche,this.fechaCompra);
    
    
    return  precio - dtoAnticipada;
@@ -56,7 +56,7 @@ override def anular() {
     //No tendria que ser un lista contiene entrada? en vez de un "=="?
     //O tendria que sacarlo si lo verifico antes
   	noche.butacasLibres= noche.butacasLibres.diff(List(butaca));
-  	SistemaVentas.entradasVendidas=SistemaVentas.entradasVendidas.+:(this);
+  	festival.entradasVendidas=festival.entradasVendidas.+:(this);
   	this.imprimir();
   	
   }

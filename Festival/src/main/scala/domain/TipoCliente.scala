@@ -5,14 +5,14 @@ import org.uqbar.commons.utils.Observable
 @Observable
 abstract class TipoCliente(){
   
-	def dtoTipoPersona(precioBase:Double) : Double;
+	def dtoTipoPersona(precioBase:Double,festival:Festival) : Double;
 }
 
 class TipoCliente_MenorDe12Acompaniado() extends TipoCliente() {
 
 
-	override def dtoTipoPersona(precioBase:Double):Double = {
-			if(SistemaVentas.descuentos.contains("menores de 12"))
+	override def dtoTipoPersona(precioBase:Double,festival:Festival):Double = {
+			if(festival.descuentos.contains("menores de 12"))
 				return (precioBase *0.50);
 			else
 				return 0.0;
@@ -22,15 +22,15 @@ class TipoCliente_MenorDe12Acompaniado() extends TipoCliente() {
 
 class TipoCliente_MenorDe12NoAcompaniado() extends TipoCliente() {
 
-	override def dtoTipoPersona(precioBase:Double):Double = {
+	override def dtoTipoPersona(precioBase:Double,festival:Festival):Double = {
 			return 0.0;
 	} 
 }
 
 class TipoCliente_Menor() extends TipoCliente() {
   		
-	override def dtoTipoPersona(precioBase:Double):Double = {
-			if(SistemaVentas.descuentos.contains("menores de 18")){
+	override def dtoTipoPersona(precioBase:Double,festival:Festival):Double = {
+			if(festival.descuentos.contains("menores de 18")){
 				if (precioBase > 100) 
 					return (precioBase *0.20);
 				if((precioBase <= 100) && (precioBase > 50)){
@@ -44,14 +44,14 @@ class TipoCliente_Menor() extends TipoCliente() {
 }
 
 class TipoCliente_Mayor() extends TipoCliente() {
-	override def dtoTipoPersona(precioBase:Double):Double = {
+	override def dtoTipoPersona(precioBase:Double,festival:Festival):Double = {
 			return 0;
 	}
 }
 
 class TipoCliente_Jubilado() extends TipoCliente() {
-	override def dtoTipoPersona(precioBase:Double):Double = {
-			if(SistemaVentas.descuentos.contains("jubilados")){
+	override def dtoTipoPersona(precioBase:Double,festival:Festival):Double = {
+			if(festival.descuentos.contains("jubilados")){
 				return (precioBase* 0.15);
 			}
 			return 0;
@@ -61,9 +61,9 @@ class TipoCliente_Jubilado() extends TipoCliente() {
   
 class TipoCliente_Mujer() extends TipoCliente() {
 
-	override def dtoTipoPersona(precioBase:Double):Double = {
-			if(SistemaVentas.descuentos.contains("mujeres")){
-				if ((SistemaVentas.entradasDeMujeresConDescVendidas / SistemaVentas.cantidadEntradas) < 0.20){
+	override def dtoTipoPersona(precioBase:Double,festival:Festival):Double = {
+			if(festival.descuentos.contains("mujeres")){
+				if ((festival.entradasDeMujeresConDescVendidas / festival.cantidadEntradas) < 0.20){
 					return (precioBase *0.20);
 				}
 			}

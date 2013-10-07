@@ -5,9 +5,10 @@ import org.joda.convert._
 import org.uqbar.commons.utils.Observable
 
 @Observable
-class Noche(unaFecha:DateTime,unaHora:Int, unId :Int,
+class Noche(unFestival: Festival,unaFecha:DateTime,unaHora:Int, unId :Int,
     lasBandas:List[Banda],lasButacas:List[Butaca]) {
   
+	var festival: Festival = unFestival
 	var fecha: DateTime = unaFecha;
 	var horaInicio: Int = unaHora;
 	var bandas: List[Banda] = lasBandas;

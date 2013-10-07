@@ -22,7 +22,6 @@ abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche
 	var fechaCompra: DateTime = fechaDeCompra
 	var devuelta: Boolean = false;
 
-
 	/*
 tipoDePago que tenga un objeto de una clase pagoEnEfectivos o de una clase pagoConTarjeta. 
 Que en el metodo comprar de la entrada llame a tipoDePago.comprar()
@@ -31,10 +30,12 @@ Que en el metodo comprar de la entrada llame a tipoDePago.comprar()
 
 def comprar();
   
+def festival = noche.festival
+
 def anular();
 
 def anularVenta(){
-  	SistemaVentas.entradasVendidas = SistemaVentas.entradasVendidas.filter(entrada=> entrada != this)
+  	festival.entradasVendidas = festival.entradasVendidas.filter(entrada=> entrada != this)
 }	//Saca la entrada de la lista de entradas vendidas
 
   def precioFinal(): Double; 
