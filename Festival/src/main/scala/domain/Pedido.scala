@@ -17,6 +17,8 @@ class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago, unaFecha: DateTime= ne
   def agregarEntradaComun(unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca, elCodigo: String=""): Boolean = {
       if (unaButaca.codigo.!=(elCodigo)){return false;}
 	  var entradaComun = new EntradaComun( _cliente, unTipoCliente, unaNoche, unaButaca, _fechaDeCompra)
+	  
+	  //La asignacion del nro de factura podria estar en el constructor de entrada. FIXME
 	  entradaComun.nroFactura = NroFactura.SacarNroFactura;
 	  _entradas=_entradas.+:(entradaComun);
 	  return true;

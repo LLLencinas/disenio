@@ -4,9 +4,10 @@ import org.joda.time._
 import org.joda.convert._
 import org.uqbar.commons.utils.Observable
 import org.joda.time.format.DateTimeFormatter
+import org.uqbar.commons.model.Entity
 
 @Observable
-class Festival {
+class Festival(unNombre:String = "") extends Entity {
 
   var noches: List[Noche] = List.empty[Noche];
   var entradasVendidas: List[Entrada] = List.empty[Entrada];
@@ -15,6 +16,7 @@ class Festival {
   var bandas: List[Banda] = List.empty[Banda];
   var descuentos: List[String] = List.empty[String];
   var pagosPendientes: List[Pago] = List.empty[Pago];
+  var nombre: String = unNombre
 
   def cantidadEntradas(): Int = {
     var entradas = 0;
@@ -81,5 +83,7 @@ class Festival {
     descuentos = nuevosDescuentos;
 
   }
+  
+  override def toString():String = {return nombre}
 
 }

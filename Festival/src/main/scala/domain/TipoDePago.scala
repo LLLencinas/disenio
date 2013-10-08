@@ -6,15 +6,20 @@ package domain
 import org.uqbar.commons.utils.Observable
 import scala.collection.immutable.Nil
 import java.sql.Struct
+import org.uqbar.commons.model.Entity
+
 //import java.util.Conversion
 
 @Observable
-abstract class TipoDePago {
+abstract class TipoDePago(unNombre:String="") extends Entity {
+  var nombre:String = unNombre
 
   def comprar(unaEntrada: Entrada): Boolean;
+  
+  override def toString():String = nombre
 }
 
-class PagoEnEfectivo extends TipoDePago() {
+class PagoEnEfectivo(unNombre:String="") extends TipoDePago(unNombre) {
   def comprar(unaEntrada: Entrada): Boolean = {
 
     var festival = unaEntrada.festival
@@ -29,7 +34,7 @@ class PagoEnEfectivo extends TipoDePago() {
 
 }
 
-class PagoConTarjeta() extends TipoDePago() {
+class PagoConTarjeta(unNombre:String="") extends TipoDePago(unNombre) {
   var _sisCobro: SistemaDeCobro = null
 
   override def comprar(unaEntrada: Entrada): Boolean = {

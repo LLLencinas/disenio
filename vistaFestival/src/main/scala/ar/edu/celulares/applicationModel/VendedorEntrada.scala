@@ -9,39 +9,52 @@ import domain.Butaca
 import java.util.Date
 import domain.TipoDePago
 import domain.TipoCliente
-
+import domain.Sector
+import domain.Fila
+import domain.Festival
 
 @org.uqbar.commons.utils.Observable
 class VendedorEntrada extends Serializable {
+  //	Para todas las entradas
+  var tipoDePago: TipoDePago = _
+  var nombre: String = _
+  var apellido: String = _
+  var entradas: List[Entrada] = _
+  var festival: Festival = _
 
-	var cliente: Cliente=_;
-	var tipoCliente:TipoCliente=_
-	var noche: Noche=_;
-	var butaca: Butaca=_;
-	var nroFactura : Int=_;
-	var precioDeVenta: Double=_;
-	var fechaCompra: Date = new Date();
-	var devuelta: Boolean = false;
-	
-	
-	def precioEnPesos:String ={ return "$" + precioDeVenta}
+  //	Para cada Entrada
+  var tipoEntrada: Entrada = _
+  var noche: Noche = _
+  var tipoDeCliente: TipoCliente = _
+  var butaca: Butaca = _
+  var fila: Fila = _
+  var sector: Sector = _
+  var precioDeVenta: Double = _
+  
+//  var noches:Seq[Noche] = 
 
-	def cargarEntradaharco = { 
-	  var entrada: Entrada = HomeEntradas.getEntradaHarco()
-	  cliente = entrada.cliente
-	  noche = entrada.noche
-	  butaca = entrada.butaca
-	  nroFactura = entrada.nroFactura
-	  precioDeVenta= entrada.precioDeVenta
-	  fechaCompra= entrada.fechaCompra
-	  devuelta= entrada.devuelta
-	  
-	}
+  def precioEnPesos: String = { return "$" + precioDeVenta }
 
-	def clear() = {
-		nroFactura = 0
-	}
+  def clearTodo() = {
+    tipoDePago = null
+    nombre = null
+    apellido = null
+    entradas = null
+    festival = null
+    clearEntrada()
+  }
 
+  def clearEntrada() = {
+    tipoEntrada = null
+    noche = null
+    tipoDeCliente = null
+    butaca = null
+    fila = null
+    sector = null
+    precioDeVenta = 0.0
+  }
 
-
+  
+  
+  
 }

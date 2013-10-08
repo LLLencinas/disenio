@@ -35,6 +35,9 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
       .onClick(new MessageSend(this, "anularEntrada"))
   }
   
+  
+  /**-------------ACCIONES ----------------**/
+  
   def mostrarEntradaHarco(){
     this.openDialog(new MostradorEntradaWindow(this))
   }

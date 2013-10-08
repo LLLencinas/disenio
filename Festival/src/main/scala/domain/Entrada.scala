@@ -11,7 +11,8 @@ import scala.collection.immutable.Nil
 import scala.util.control.Exception
 
 @Observable
-abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca, fechaDeCompra: DateTime) extends Entity {
+abstract class Entrada( uncliente: Cliente, unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca,
+    fechaDeCompra: DateTime = new DateTime("2013-12-01")) extends Entity {
 
 	var cliente: Cliente= uncliente;
 	var tipoCliente: TipoCliente= unTipoCliente;

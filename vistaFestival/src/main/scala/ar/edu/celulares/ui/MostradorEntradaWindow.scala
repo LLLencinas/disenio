@@ -35,6 +35,10 @@ class MostradorEntradaWindow(parent: WindowOwner) extends Dialog[MostradorEntrad
     new Label(verEntradaPanel).setForeground(Color.RED)
 		.bindValueToProperty("cliente")
 		
+	new Label(verEntradaPanel).setText("Tipo de Cliente:")
+    new Label(verEntradaPanel).setForeground(Color.RED)
+		.bindValueToProperty("tipoCliente")
+		
 	new Label(verEntradaPanel).setText("Precio:")
     new Label(verEntradaPanel).setForeground(Color.RED)
 		.bindValueToProperty("precioEnPesos")
@@ -46,11 +50,13 @@ class MostradorEntradaWindow(parent: WindowOwner) extends Dialog[MostradorEntrad
     new Label(verEntradaPanel).setText("Butaca:")
     new Label(verEntradaPanel).setForeground(Color.RED)
 		.bindValueToProperty("butaca")
-	
-    
-
-    //Creo un label por cada informacion que tenga de la entrada
+		
+	new Label(verEntradaPanel).setText("Festival:")
+    new Label(verEntradaPanel).setForeground(Color.RED)
+		.bindValueToProperty("festival")	
+		
   }
+  
     
 	override def addActions(actions: Panel) = {
 		new Button(actions)

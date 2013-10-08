@@ -3,10 +3,12 @@ package domain
 import org.joda.time._
 import org.joda.convert._
 import org.uqbar.commons.utils.Observable
+import scala.collection.JavaConversions.asScalaBuffer
+import org.uqbar.commons.model.Entity
 
 @Observable
 class Noche(unFestival: Festival,unaFecha:DateTime,unaHora:Int, unId :Int,
-    lasBandas:List[Banda],lasButacas:List[Butaca]) {
+    lasBandas:List[Banda],lasButacas:List[Butaca]) extends Entity {
   
 	var festival: Festival = unFestival
 	var fecha: DateTime = unaFecha;
@@ -40,7 +42,10 @@ class Noche(unFestival: Festival,unaFecha:DateTime,unaHora:Int, unId :Int,
 
 
 	override def toString():String = {
-	  return "" + id + ""	//Si o si tengo que devolver un String
+	  return fecha.getYear() + "-" +
+	  fecha.getMonthOfYear() + "-" +
+	  fecha.getDayOfMonth() + " ( " + festival.nombre + " )"
+	  //Seguramente se puede hacer mas facil y mejor 
 	}
 }
 

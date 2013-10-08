@@ -1,9 +1,10 @@
 package domain
 
 import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.Entity
 
 @Observable
-class Butaca(unSector : Sector, unaFila:Fila,unId:Int) {
+class Butaca(unSector : Sector, unaFila:Fila,unId:Int)extends Entity {
 
 		var sector : Sector = unSector;
 		var fila : Fila = unaFila;

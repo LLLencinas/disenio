@@ -1,9 +1,10 @@
 package domain
 
 import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.Entity
 
 @Observable
-class Banda(unCategoria:Categoria,unNombre:String) {
+class Banda(unCategoria:Categoria,unNombre:String) extends Entity{
 	var _categoria:Categoria = unCategoria;
 	var nombre: String = unNombre;
 	

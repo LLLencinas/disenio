@@ -19,12 +19,12 @@ class FestivalTest {
 //  SistemaVentas.pagosPendientes = List.empty[Pago];
 //  SistemaVentas.entradasVendidas = List.empty[Entrada];
   
-  var noviembreFest:Festival  = new Festival()
+  var noviembreFest:Festival  = new Festival("noviembreFest")
   noviembreFest.descuentos = descuentos
   noviembreFest.pagosPendientes = List.empty[Pago]
   noviembreFest.entradasVendidas = List.empty[Entrada]
   
-  var diciembreFest:Festival = new Festival()
+  var diciembreFest:Festival = new Festival("diciembreFest")
   diciembreFest.descuentos = descuentos
   diciembreFest.pagosPendientes = List.empty[Pago]
   diciembreFest.entradasVendidas = List.empty[Entrada]
@@ -115,12 +115,12 @@ class FestivalTest {
  	 * florencia es mujer
  	 */
 
-  var clienteMayor = new TipoCliente_Mayor();
-  var clienteMujer = new TipoCliente_Mujer();
-  var clienteMenor = new TipoCliente_Menor();
-  var clienteJubilado = new TipoCliente_Jubilado();
-  var clienteMenor12Acompaniado = new TipoCliente_MenorDe12Acompaniado();
-  var clienteMenor12NoAcompaniado = new TipoCliente_MenorDe12NoAcompaniado();
+  var clienteMayor = new TipoCliente_Mayor("Cliente Mayor");
+  var clienteMujer = new TipoCliente_Mujer("Cliente Mujer");
+  var clienteMenor = new TipoCliente_Menor("Cliente Menor");
+  var clienteJubilado = new TipoCliente_Jubilado("Cliente Jubilado");
+  var clienteMenor12Acompaniado = new TipoCliente_MenorDe12Acompaniado("Cliente Menor de 12 Acompaniado");
+  var clienteMenor12NoAcompaniado = new TipoCliente_MenorDe12NoAcompaniado("Cliente Menor de 12 No Acompaniado");
 
   var carlos = new Cliente("Carlos", "Fernandez", "5432524545", "|40 anios|DNI = 17.897.364");
   var jose = new Cliente("Josa", "Gomez", "123324545", "|60 anios|DNI = 8.897.364");
