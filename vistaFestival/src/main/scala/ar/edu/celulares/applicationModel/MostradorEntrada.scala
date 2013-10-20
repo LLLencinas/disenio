@@ -11,6 +11,7 @@ import domain.TipoDePago
 import domain.TipoCliente
 import org.joda.time.DateTime
 import domain.Festival
+import domain.PuestoDeVenta
 
 
 @org.uqbar.commons.utils.Observable
@@ -25,6 +26,7 @@ class MostradorEntrada extends Serializable {
 	var fechaCompra: DateTime=_
 	var devuelta: Boolean = false
 	var festival: Festival =_
+	var puestoDeVenta:PuestoDeVenta=_
 	
 	def precioEnPesos:String ={ return "$" + precioDeVenta}
 	
@@ -45,6 +47,8 @@ class MostradorEntrada extends Serializable {
 	  tipoCliente = entrada.tipoCliente
 	  devuelta= entrada.devuelta
 	  festival = entrada.festival
+	  puestoDeVenta = entrada.puestoDeVenta
+	  
 	  
 	  
 	}

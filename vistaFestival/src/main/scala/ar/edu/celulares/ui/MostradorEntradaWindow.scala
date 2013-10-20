@@ -29,31 +29,36 @@ class MostradorEntradaWindow(parent: WindowOwner) extends Dialog[MostradorEntrad
 
     new Label(verEntradaPanel).setText("Numero de Factura:")
     new Label(verEntradaPanel) .setForeground(Color.RED)
-		.bindValueToProperty("nroFactura")
+		.bindValueToProperty("nroFactura");
+	
+	new Label(verEntradaPanel).setText("Puesto de Venta:")
+    new Label(verEntradaPanel) .setForeground(Color.RED)
+		.bindValueToProperty("puestoDeVenta");
+		
 		
 	new Label(verEntradaPanel).setText("Cliente:")
     new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("cliente")
+		.bindValueToProperty("cliente");
 		
 	new Label(verEntradaPanel).setText("Tipo de Cliente:")
     new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("tipoCliente")
+		.bindValueToProperty("tipoCliente");
 		
 	new Label(verEntradaPanel).setText("Precio:")
     new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("precioEnPesos")
+		.bindValueToProperty("precioEnPesos");
 		
 	new Label(verEntradaPanel).setText("Noche:")
     new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("noche")	
+		.bindValueToProperty("noche");	
 		
     new Label(verEntradaPanel).setText("Butaca:")
     new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("butaca")
+		.bindValueToProperty("butaca");
 		
 	new Label(verEntradaPanel).setText("Festival:")
     new Label(verEntradaPanel).setForeground(Color.RED)
-		.bindValueToProperty("festival")	
+		.bindValueToProperty("festival");	
 		
   }
   

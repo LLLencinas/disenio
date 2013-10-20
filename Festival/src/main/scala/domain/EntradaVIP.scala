@@ -3,8 +3,8 @@ package domain
 import org.joda.time._
 import org.joda.convert._
 
-class EntradaVIP( uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca,fechaDeCompra: DateTime, unFestival:Festival)
-	extends Entrada(uncliente, unTipoCliente, null , unaButaca,fechaDeCompra) {
+class EntradaVIP(unPuesto:PuestoDeVenta, uncliente: Cliente,unTipoCliente: TipoCliente, unaButaca: Butaca,fechaDeCompra: DateTime, unFestival:Festival)
+	extends Entrada(unPuesto, uncliente, unTipoCliente, null , unaButaca,fechaDeCompra) {
   noche = unFestival.noches.head;
   precioDeVenta=this.precioFinal();
 
@@ -24,6 +24,8 @@ override def devolver(fechaDevolucion : DateTime): Double ={
 		for(noche <- festival.noches){
 			noche.butacasLibres=noche.butacasLibres.+:(butaca);
 		}
+		this.puestoDeVenta.sacarEntrada(this)
+		
   	  	devuelta=true;
   	  	return precioDeVenta*0.5;
   	}
@@ -35,6 +37,7 @@ override def anular() {
     for(noche <- festival.noches){
   		  noche.butacasLibres=noche.butacasLibres.+:(butaca);
   	  }
+	this.puestoDeVenta.sacarEntrada(this)
   
 }
 
@@ -70,6 +73,7 @@ override def precioFinal(): Double = {
     		noche.butacasLibres= noche.butacasLibres.diff(List(butaca));
     	}
     	festival.entradasVendidas=festival.entradasVendidas.+:(this);
+    	this.puestoDeVenta.agregarEntrada(this)
     	this.imprimir(); 
     	return;
   }

@@ -31,6 +31,7 @@ import ar.edu.celulares.home.HomeFilas
 import ar.edu.celulares.home.HomeSectores
 import ar.edu.celulares.home.HomeButacas
 import domain.Butaca
+import ar.edu.celulares.home.HomePuestosDeVenta
 
 class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada](parent, new VendedorEntrada) {
 
@@ -54,6 +55,12 @@ class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada]
 
     new Label(form).setText("Apellido:")
     new TextBox(form).bindValueToProperty("apellido")
+    
+    new Label(form).setText("PuestoDeVenta")
+    var selectorPuesto = new Selector[Festival](form)
+    selectorPuesto.allowNull(false)
+    selectorPuesto.bindValueToProperty("puestoDeVenta")
+    var propiedadPuesto = selectorPuesto.bindItems(new ObservableProperty(HomePuestosDeVenta, "puestos"))
 
     new Label(form).setText("Festival")
     var selectorFestival = new Selector[Festival](form)

@@ -4,19 +4,20 @@ import org.uqbar.commons.utils.Observable
 import org.joda.time.DateTime
 
 @Observable
-class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago, unaFecha: DateTime= new DateTime("2013-12-01")){
+class Pedido(unPuesto:PuestoDeVenta, unCliente: Cliente, unTipoDePago:TipoDePago, unaFecha: DateTime= new DateTime("2013-12-01")){
 	
 	var _entradas:List[Entrada]= List.empty[Entrada] 	
 	var _tipoPago:TipoDePago = unTipoDePago;
 	var _cliente: Cliente = unCliente;
 	var _fechaDeCompra: DateTime  = unaFecha
+	var _puestoDeVenta : PuestoDeVenta = unPuesto
 
 	
 
 		
   def agregarEntradaComun(unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca, elCodigo: String=""): Boolean = {
       if (unaButaca.codigo.!=(elCodigo)){return false;}
-	  var entradaComun = new EntradaComun( _cliente, unTipoCliente, unaNoche, unaButaca, _fechaDeCompra)
+	  var entradaComun = new EntradaComun( _puestoDeVenta, _cliente, unTipoCliente, unaNoche, unaButaca, _fechaDeCompra)
 	  
 	  //La asignacion del nro de factura podria estar en el constructor de entrada. FIXME
 	  entradaComun.nroFactura = NroFactura.SacarNroFactura;
@@ -31,7 +32,7 @@ class Pedido(unCliente: Cliente, unTipoDePago:TipoDePago, unaFecha: DateTime= ne
     	if (!noche.butacasLibres.contains(unaButaca)) {return false;} 
     }  
     if (unaButaca.codigo.!=(elCodigo)){return false;}
-	var entradaVip = new EntradaVIP(_cliente, unTipoCliente, unaButaca,_fechaDeCompra,unFestival);
+	var entradaVip = new EntradaVIP(_puestoDeVenta,_cliente, unTipoCliente, unaButaca,_fechaDeCompra,unFestival);
 		entradaVip.nroFactura = NroFactura.SacarNroFactura;
 	  _entradas=_entradas.+:(entradaVip);
 	  return true;

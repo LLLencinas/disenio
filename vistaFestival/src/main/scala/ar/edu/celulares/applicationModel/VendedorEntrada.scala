@@ -15,6 +15,7 @@ import domain.Fila
 import domain.Festival
 import ar.edu.celulares.home.HomeNoches
 import ar.edu.celulares.home.HomeButacas
+import domain.PuestoDeVenta
 
 
 
@@ -28,6 +29,7 @@ class VendedorEntrada extends Serializable {
   var apellido: String = _
   var entradas: List[Entrada] = _
   var _festival: Festival = _
+  var puestoDeVenta:PuestoDeVenta=_
   
   /**Getters y Setters necesarios para algunos combos que dependen de otros**/
   

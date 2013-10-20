@@ -5,7 +5,9 @@ import org.joda.convert._
 
 
 
-class EntradaComun( uncliente: Cliente,unTipoCliente: TipoCliente, unaNoche: Noche, unaButaca: Butaca,fechaDeCompra:DateTime = new DateTime("2013-12-01")) extends Entrada(uncliente, unTipoCliente, unaNoche, unaButaca,fechaDeCompra ) {
+class EntradaComun(unPuesto:PuestoDeVenta, uncliente: Cliente,unTipoCliente: TipoCliente,
+    unaNoche: Noche, unaButaca: Butaca,fechaDeCompra:DateTime = new DateTime("2013-12-01"))
+    extends Entrada(unPuesto,uncliente, unTipoCliente, unaNoche, unaButaca,fechaDeCompra ) {
 
 precioDeVenta=this.precioFinal();
 
@@ -25,6 +27,7 @@ override def devolver(fechaDevolucion : DateTime): Double ={
 	    }
   	  
   	  noche.butacasLibres=noche.butacasLibres.+:(butaca);
+  	  this.puestoDeVenta.sacarEntrada(this)
   	  devuelta=true;
   	  return precioDeVenta*0.5;
 }
@@ -35,6 +38,7 @@ override def anular() {
 	
 	anularVenta()	
 	noche.butacasLibres=noche.butacasLibres.+:(butaca);
+	this.puestoDeVenta.sacarEntrada(this)
 	
   	  }  
 
@@ -60,6 +64,8 @@ override def anular() {
     //O tendria que sacarlo si lo verifico antes
   	noche.butacasLibres= noche.butacasLibres.diff(List(butaca));
   	festival.entradasVendidas=festival.entradasVendidas.+:(this);
+  	this.puestoDeVenta.agregarEntrada(this)
+  	
   	this.imprimir();
   	
   }

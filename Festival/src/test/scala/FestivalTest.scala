@@ -13,11 +13,15 @@ class FestivalTest {
 
   @Before
   var descuentos = List[String]("mujeres", "menores de 18", "menores de 12", "jubilados");
+
+  var estadio = new PuestoDeVenta("Estadio Velez");
+  var abasto = new PuestoDeVenta("Abasto");
+  var dot = new PuestoDeVenta("DOT");
+  var unicenter = new PuestoDeVenta("Unicenter");
+  var kiosko = new PuestoDeVenta("Kiosko Tito");
   
-  //Esto no tiene que ir
-//  SistemaVentas.descuentos = descuentos;
-//  SistemaVentas.pagosPendientes = List.empty[Pago];
-//  SistemaVentas.entradasVendidas = List.empty[Entrada];
+  
+  
   
   var noviembreFest:Festival  = new Festival("noviembreFest")
   noviembreFest.descuentos = descuentos
@@ -177,7 +181,7 @@ class FestivalTest {
 
   @Test
   def compraDeEntradaClienteMayorNoche1Butaca1() {
-    var pedido = new Pedido(carlos, pagoEfectivo);
+    var pedido = new Pedido(estadio,carlos, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca1_1A);
     pedido.comprar();
 
@@ -185,7 +189,7 @@ class FestivalTest {
   }
   @Test
   def compraDeEntradaClienteJubiladoNoche2Butaca6() {
-    var pedido = new Pedido(jose, pagoEfectivo);
+    var pedido = new Pedido(estadio,jose, pagoEfectivo);
     pedido.agregarEntradaComun(clienteJubilado, noche2, butaca6_3B);
     pedido.comprar();
 
@@ -194,7 +198,7 @@ class FestivalTest {
 
   @Test
   def compraDeEntrada_Mayor100_ClienteMenor18Noche3Butaca4() {
-    var pedido = new Pedido(facundo, pagoEfectivo);
+    var pedido = new Pedido(abasto,facundo, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMenor, noche3, butaca4_1B);
     pedido.comprar();
 
@@ -203,7 +207,7 @@ class FestivalTest {
 
   @Test
   def compraDeEntrada_Menor100_ClienteMenor18Noche4Butaca9() {
-    var pedido = new Pedido(pablo, pagoEfectivo);
+    var pedido = new Pedido(dot,pablo, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMenor, noche4, butaca9_3C);
     pedido.comprar();
 
@@ -215,7 +219,7 @@ class FestivalTest {
 
   @Test
   def compraDeEntradaAnticipada_ClienteMayorNoche5Butaca5() {
-     var pedido = new Pedido(carlos,pagoEfectivo,new DateTime("2013-11-09"));
+     var pedido = new Pedido(kiosko,carlos,pagoEfectivo,new DateTime("2013-11-09"));
      pedido.agregarEntradaComun(clienteMayor,noche5, butaca5_2B);
      pedido.comprar();
      
@@ -224,7 +228,7 @@ class FestivalTest {
 
   @Test
   def comprarYDevolverEntrada() {
-    var pedido = new Pedido(carlos, pagoEfectivo);
+    var pedido = new Pedido(unicenter,carlos, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca3_3A);
     pedido.comprar();
 
@@ -237,7 +241,7 @@ class FestivalTest {
 
   @Test
   def comprarComboDeEntradasSin10DeDescuento {
-    var pedido = new Pedido(carlos, pagoEfectivo);
+    var pedido = new Pedido(dot,carlos, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca2_2A);
     pedido.agregarEntradaComun(clienteMayor, noche2, butaca8_2C);
     pedido.agregarEntradaComun(clienteMayor, noche3, butaca7_1C);
@@ -249,7 +253,7 @@ class FestivalTest {
 
   @Test
   def comprarComboDeEntradasCon10DeDescuento {
-    var pedido = new Pedido(carlos, pagoEfectivo);
+    var pedido = new Pedido(dot,carlos, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca10_3C);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca11_3C);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca12_3C);
@@ -269,7 +273,7 @@ class FestivalTest {
    */
   @Test
   def compraDeEntradaVIP_ClienteMayorButaca17() {
-    var pedido = new Pedido(carlos, pagoEfectivo);
+    var pedido = new Pedido(kiosko,carlos, pagoEfectivo);
     pedido.agregarEntradaVip(clienteMayor, butaca17_3C,noviembreFest);
     pedido.comprar();
     assertEquals(1275.0, pedido.precioAcumulado(), 0.0);
@@ -289,7 +293,7 @@ class FestivalTest {
   /***************** PUNTO 2 - Cmabios en la politica de descuento  ************/
   @Test
   def compraDeEntrada_ClienteMenorDe12Noche4Butaca18() {
-    var pedido = new Pedido(pedrito, pagoEfectivo);
+    var pedido = new Pedido(dot,pedrito, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMenor12Acompaniado, noche4, butaca18_3C);
     pedido.comprar();
     assertEquals(70.0 - 35.0 + 200.0, pedido.precioNeto(), 0.0);
@@ -297,7 +301,7 @@ class FestivalTest {
 
   @Test
   def compraDeEntrada_ClienteMujerNoche3Butaca19() {
-    var pedido = new Pedido(florencia, pagoEfectivo);
+    var pedido = new Pedido(estadio,florencia, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMujer, noche3, butaca19_3C);
     pedido.comprar();
     assertEquals(70.0 - 14.0 + 50.0, pedido.precioNeto(), 0.0);
@@ -309,7 +313,7 @@ class FestivalTest {
     //Y despues lo vuelvo a meter para que no haya problemas con los otros tests
 
     noviembreFest.sacarDescuento("mujeres");
-    var pedido = new Pedido(florencia, pagoEfectivo);
+    var pedido = new Pedido(estadio,florencia, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMujer, noche1, butaca20_3C);
     pedido.comprar();
     assertEquals(70.0 - 0.0 + 100.0, pedido.precioNeto(), 0.0);
@@ -320,7 +324,7 @@ class FestivalTest {
     //Para que el festival no tenga el descuento de mujeres, lo saco e la lista de descuentos
     //Y despues lo vuelvo a meter para que no haya problema	s con los otros tests
     noviembreFest.sacarDescuento("jubilados");
-    var pedido = new Pedido(jose, pagoEfectivo);
+    var pedido = new Pedido(dot,jose, pagoEfectivo);
     pedido.agregarEntradaComun(clienteJubilado, noche4, butaca21_3C);
     pedido.comprar();
     assertEquals(70.0 - 0.0 + 200.0, pedido.precioNeto(), 0.0);
@@ -331,11 +335,11 @@ class FestivalTest {
   @Test
   def compraDeEntradaReservada_ClienteJubiladoNoche2Butaca6() {
     noche2.reservarButaca(butaca6_3B, "Codigo_de_Prueba");
-    var pedido = new Pedido(jose, pagoEfectivo);
+    var pedido = new Pedido(dot,jose, pagoEfectivo);
     pedido.agregarEntradaComun(clienteJubilado, noche4, butaca6_3B);
     assert(pedido._entradas.isEmpty);
 
-    pedido = new Pedido(jose, pagoEfectivo);
+    pedido = new Pedido(unicenter,jose, pagoEfectivo);
     pedido.agregarEntradaComun(clienteJubilado, noche4, butaca6_3B, "");
     assert(pedido._entradas.isEmpty);
 
@@ -351,7 +355,7 @@ class FestivalTest {
   def impostorEstaConectadoYValida {
     var unImpostorValidaYConecta = new ImpostorSistemaDeCobro(true, true);
     pagoTarjeta._sisCobro = unImpostorValidaYConecta;
-    var pedidoValidaYConecta = new Pedido(florencia, pagoTarjeta);
+    var pedidoValidaYConecta = new Pedido(unicenter,florencia, pagoTarjeta);
     pedidoValidaYConecta.agregarEntradaComun(clienteMujer, noche1, butaca20_3C)
 
     pedidoValidaYConecta.comprar();
@@ -364,7 +368,7 @@ class FestivalTest {
   def impostorEstaConectadoYNoValida {
     var unImpostorNoValidaYConecta = new ImpostorSistemaDeCobro(true, false);
     pagoTarjeta._sisCobro = unImpostorNoValidaYConecta;
-    var pedidoNoValidaYConecta = new Pedido(florencia, pagoTarjeta);
+    var pedidoNoValidaYConecta = new Pedido(dot,florencia, pagoTarjeta);
     pedidoNoValidaYConecta.agregarEntradaComun(clienteMujer, noche1, butaca20_3C)
 
     pedidoNoValidaYConecta.comprar();
@@ -377,7 +381,7 @@ class FestivalTest {
   def impostorEstaNoConectadoYValida {
     var unImpostorValidaYNoConecta = new ImpostorSistemaDeCobro(false, true);
     pagoTarjeta._sisCobro = unImpostorValidaYNoConecta;
-    var pedidoValidaYNoConecta = new Pedido(florencia, pagoTarjeta);
+    var pedidoValidaYNoConecta = new Pedido(dot,florencia, pagoTarjeta);
     pedidoValidaYNoConecta.agregarEntradaComun(clienteMujer, noche1, butaca20_3C)
 
     pedidoValidaYNoConecta.comprar();
@@ -396,7 +400,7 @@ class FestivalTest {
   def impostorEstaNoConectadoYNoValida {
     var unImpostorNoValidaYNoConecta = new ImpostorSistemaDeCobro(false, false);
     pagoTarjeta._sisCobro = unImpostorNoValidaYNoConecta;
-    var pedidoNoValidaYNoConecta = new Pedido(florencia, pagoTarjeta);
+    var pedidoNoValidaYNoConecta = new Pedido(dot,florencia, pagoTarjeta);
     pedidoNoValidaYNoConecta.agregarEntradaComun(clienteMujer, noche1, butaca20_3C)
 
     pedidoNoValidaYNoConecta.comprar();
@@ -413,7 +417,7 @@ class FestivalTest {
  **/
     @Test
   def compraDeEntrada_ClienteMujerNoche3Butaca19DiciembreFest() {
-    var pedido = new Pedido(florencia, pagoEfectivo);
+    var pedido = new Pedido(dot,florencia, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMujer, nocheTres, butaca19_3C);
     pedido.comprar();
     assertEquals(70.0 - 14.0 + 50.0, pedido.precioNeto(), 0.0);

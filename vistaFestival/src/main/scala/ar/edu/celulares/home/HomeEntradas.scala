@@ -33,7 +33,7 @@ object HomeEntradas extends CollectionBasedHome[Entrada] {
 
   override def getEntityType = classOf[Entrada]
 
-  override def createExample = new EntradaComun(HomeClientes.createExample, HomeTipoDeClientes.createExample,
+  override def createExample = new EntradaComun(HomePuestosDeVenta.createExample,HomeClientes.createExample, HomeTipoDeClientes.createExample,
       HomeNoches.createExample, HomeButacas.createExample)
 
   override def getCriterio(example: Entrada) = null
