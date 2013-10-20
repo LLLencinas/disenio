@@ -70,7 +70,8 @@ class TipoCliente_Mujer(unNombre:String) extends TipoCliente(unNombre) {
 
   override def dtoTipoPersona(precioBase: Double, festival: Festival): Double = {
     if (festival.descuentos.contains("mujeres")) {
-      if ((festival.entradasDeMujeresConDescVendidas / festival.cantidadEntradas) < 0.20) {
+      //println("Entradas vendidas en el festival " +festival.nombre +": " + festival.cantidadEntradas )
+      if ((festival.cantidadEntradas == 0) || (festival.entradasDeMujeresConDescVendidas / festival.cantidadEntradas) < 0.20) {
         return (precioBase * 0.20);
       }
     }

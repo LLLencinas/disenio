@@ -8,13 +8,10 @@ import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
 import org.apache.commons.collections15.Predicate
 import org.uqbar.commons.utils.ApplicationContext
-import domain.Sector
-import domain.Fila
-import domain.Noche
-import domain.Festival
+
 import org.joda.time.DateTime
-import domain.Banda
-import domain.Butaca
+
+import domain._
 
 @Observable
 object HomeNoches extends CollectionBasedHome[Noche] {

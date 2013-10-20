@@ -31,6 +31,8 @@ Que en el metodo comprar de la entrada llame a tipoDePago.comprar()
 
 
 def comprar();
+	
+	def nombreCliente = cliente.toString
   
 def festival = noche.festival
 

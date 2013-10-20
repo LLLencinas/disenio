@@ -228,12 +228,15 @@ class FestivalTest {
 
   @Test
   def comprarYDevolverEntrada() {
+    
+    var fechaDevolucion = new DateTime("2013-12-05")
     var pedido = new Pedido(unicenter,carlos, pagoEfectivo);
     pedido.agregarEntradaComun(clienteMayor, noche1, butaca3_3A);
     pedido.comprar();
 
     assertEquals(210.0, pedido._entradas.head.precioDeVenta, 0.0);
-    var precioDevuelto = pedido._entradas.head.devolver(new DateTime("2013-12-05"))
+    var precioDevuelto = pedido._entradas.head.devolver(fechaDevolucion)
+    
     assertEquals(105.0, precioDevuelto, 0.0);
   }
 	

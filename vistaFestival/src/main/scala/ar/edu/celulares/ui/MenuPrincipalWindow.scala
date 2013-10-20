@@ -24,15 +24,20 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
   override def addActions(actionsPanel: Panel) {
     new Button(actionsPanel)
       .setCaption("Preview De Entrada X")
-      .onClick(new MessageSend(this,"mostrarEntradaHarco"))
+      .onClick(new MessageSend(this,"mostrarEntradaHarco"));
 
     new Button(actionsPanel) //
       .setCaption("Vender Entrada")
-      .onClick(new MessageSend(this,"venderEntrada"))
+      .onClick(new MessageSend(this,"venderEntrada"));
 
     new Button(actionsPanel) //
       .setCaption("Anular Entrada")
-      .onClick(new MessageSend(this, "anularEntrada"))
+      .onClick(new MessageSend(this, "anularEntrada"));
+    
+    new Button(actionsPanel) //
+      .setCaption("Buscar Entrada")
+      .onClick(new MessageSend(this, "buscarEntradas"));
+  
   }
   
   
@@ -49,6 +54,11 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
   def anularEntrada(){
     this.openDialog(new MostradorEntradaWindow(this))
   }
+  
+  def buscarEntradas(){
+    this.openDialog(new BuscadorEntradaWindow(this))
+  }
+  
   
   def openDialog(dialog:Dialog[_]){
     dialog.open

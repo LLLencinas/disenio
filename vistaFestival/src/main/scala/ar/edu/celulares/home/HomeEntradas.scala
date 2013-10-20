@@ -1,41 +1,129 @@
 package ar.edu.celulares.home
 
-import domain.Noche
-import java.util.Date
-import domain.Banda
-import domain.Butaca
-import domain.Categoria
-import domain.Sector
-import domain.Fila
-import domain.EntradaComun
-import domain.PagoEnEfectivo
-import domain.Entrada
+import scala.collection.JavaConversions._
+import scala.collection.JavaConversions.asScalaBuffer
 import org.uqbar.commons.model.CollectionBasedHome
 import org.uqbar.commons.utils.Observable
-import domain.PagoConTarjeta
-import domain.Pedido
-import domain.TipoCliente_Mayor
-import domain.TipoCliente_Mujer
-import domain.TipoCliente_Menor
-import domain.TipoCliente_Jubilado
-import domain.TipoCliente_MenorDe12Acompaniado
-import domain.TipoCliente_MenorDe12NoAcompaniado
-import domain.Cliente
-import domain.Festival
-import domain.Pago
 import org.joda.time.DateTime
-import domain.NroFactura
+import domain._
+import org.joda.time.Days
 
 @Observable
 object HomeEntradas extends CollectionBasedHome[Entrada] {
+  
+  this.cargarEntradasIniciales();
+  
 
-  def entradas: java.util.List[Entrada] = allInstances
+  def entradas: Seq[Entrada] = allInstances
 
   override def getEntityType = classOf[Entrada]
 
-  override def createExample = new EntradaComun(HomePuestosDeVenta.createExample,HomeClientes.createExample, HomeTipoDeClientes.createExample,
-      HomeNoches.createExample, HomeButacas.createExample)
+  override def createExample = new EntradaComun(HomePuestosDeVenta.createExample, HomeClientes.createExample, HomeTipoDeClientes.createExample,
+    HomeNoches.createExample, HomeButacas.createExample)
 
   override def getCriterio(example: Entrada) = null
+
+  def search(nombreCliente: String = "", fechaDesde: String = "", fechaHasta: String = "") = {
+    entradas.filter { entrada =>
+      this.coincide(nombreCliente, entrada.cliente.toString) &&
+        this.coincideFechas(entrada.fechaCompra, fechaDesde, fechaHasta)
+    }
+  }
+
+  def coincide(expectedValue: Any, realValue: Any): Boolean = {
+    if (expectedValue == null) {
+      return true
+    }
+    if (realValue == null) {
+      return false
+    }
+    return realValue.toString().toLowerCase().contains(expectedValue.toString().toLowerCase())
+  }
+
+  def coincideFechas(fechaCompra: DateTime, fechaDesde: String, fechaHasta: String): Boolean = {
+
+    if (fechaDesde == "" && fechaHasta == "")
+      return true;
+    if (fechaDesde == "")
+      return Days.daysBetween(fechaCompra, new DateTime(fechaHasta)).getDays() > 0;
+    if (fechaHasta == "")
+      return Days.daysBetween(new DateTime(fechaDesde), fechaCompra).getDays() > 0;
+
+    return Days.daysBetween(new DateTime(fechaDesde), fechaCompra).getDays() > 0 &&
+      Days.daysBetween(fechaCompra, new DateTime(fechaHasta)).getDays() > 0;
+
+    return true
+
+  }
+
+  def cargarEntradasIniciales() {
+    var pedidosIniciales: List[Pedido] = List.empty
+    var pedido: Pedido = null
+    pedido = new Pedido(HomePuestosDeVenta.get("unicenter"), HomeClientes.get("carlos"), HomeTiposDePago.get("efectivo"),new DateTime("2013-10-01"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(1), HomeButacas.get(2));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(2), HomeButacas.get(8));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(3), HomeButacas.get(7));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    pedido = new Pedido(HomePuestosDeVenta.get("abasto"), HomeClientes.get("pedrito"), HomeTiposDePago.get("efectivo"),new DateTime("2013-10-20"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("no acompaniado"), HomeNoches.getPorInt(4), HomeButacas.get(14));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    pedido = new Pedido(HomePuestosDeVenta.get("estadio"), HomeClientes.get("florencia"), HomeTiposDePago.get("efectivo"),new DateTime("2013-11-05"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mujer"), HomeNoches.getPorInt(3), HomeButacas.get(14));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    pedido = new Pedido(HomePuestosDeVenta.get("kiosko"), HomeClientes.get("facu"), HomeTiposDePago.get("efectivo"),new DateTime("2013-11-15"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("menor de 18"), HomeNoches.getPorInt(2), HomeButacas.get(1));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(2), HomeButacas.get(2));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(2), HomeButacas.get(3));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("jubilado"), HomeNoches.getPorInt(2), HomeButacas.get(4));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mujer"), HomeNoches.getPorInt(2), HomeButacas.get(5));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(2), HomeButacas.get(6));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(2), HomeButacas.get(7));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    pedido = new Pedido(HomePuestosDeVenta.get("DOT"), HomeClientes.get("jose"), HomeTiposDePago.get("efectivo"),new DateTime("2013-11-11"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("menor de 18"), HomeNoches.getPorInt(1), HomeButacas.get(10));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mujer"), HomeNoches.getPorInt(2), HomeButacas.get(10));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("jubilado"), HomeNoches.getPorInt(3), HomeButacas.get(10));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    pedido = new Pedido(HomePuestosDeVenta.get("DOT"), HomeClientes.get("pablo"), HomeTiposDePago.get("efectivo"),new DateTime("2013-09-11"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("menor"), HomeNoches.getPorInt(1), HomeButacas.get(15));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("jubilado"), HomeNoches.getPorInt(3), HomeButacas.get(15));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mayor"), HomeNoches.getPorInt(4), HomeButacas.get(15));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    pedido = new Pedido(HomePuestosDeVenta.get("DOT"), HomeClientes.get("pedrito"), HomeTiposDePago.get("efectivo"),new DateTime("2013-11-29"));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("mujer"), HomeNoches.getPorInt(5), HomeButacas.get(1));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("jubilado"), HomeNoches.getPorInt(5), HomeButacas.get(2));
+    pedido.agregarEntradaComun(HomeTipoDeClientes.get("no acompaniado"), HomeNoches.getPorInt(5), HomeButacas.get(3));
+    pedido.comprar();
+
+    pedidosIniciales = pedidosIniciales.+:(pedido)
+
+    for (pedido <- pedidosIniciales)
+      createEntradas(pedido)
+
+  }
+
+  def createEntradas(pedido: Pedido): Unit = {
+    for (entrada <- pedido._entradas)
+      this.create(entrada)
+
+  }
 
 }

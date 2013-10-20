@@ -38,9 +38,6 @@ class Festival(unNombre:String = "") extends Entity {
 
   def calcularDescuentoAnticipa(precio: Double, noche: Noche, fechaDeCompra: DateTime): Double = {
 
-    //System.out.println("Fecha de COmpra: " + fechaDeCompra.getDayOfMonth());
-    //System.out.println("Noche: " + noche.fecha.getDayOfMonth());
-
     var diffInDays = diferenciasDeFechas(fechaDeCompra, noche.fecha);
     if (diffInDays > diasMinDescuentoAnticipada) {
       return precio * porcentajeDescuentoAnticipada;

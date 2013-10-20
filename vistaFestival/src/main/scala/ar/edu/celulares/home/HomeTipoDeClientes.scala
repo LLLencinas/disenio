@@ -21,7 +21,7 @@ object HomeTipoDeClientes extends CollectionBasedHome[TipoCliente]  {
 
   this.create(new TipoCliente_Mayor("Cliente Mayor"))
   this.create(new TipoCliente_Mujer("Cliente Mujer"))
-  this.create(new TipoCliente_Menor("Cliente Menor"))
+  this.create(new TipoCliente_Menor("Cliente Menor de 18"))
   this.create(new TipoCliente_Jubilado("Cliente Jubilado"))
   this.create(new TipoCliente_MenorDe12Acompaniado("Cliente Menor de 12 Acompaniado"))
   this.create(new TipoCliente_MenorDe12NoAcompaniado("Cliente Menor de 12 No Acompaniado"))

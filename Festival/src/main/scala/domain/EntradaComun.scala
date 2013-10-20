@@ -49,9 +49,7 @@ override def anular() {
    var valorExtraPorNoche = noche.valorExtra();
    var descuentoTipoPersona = tipoCliente.dtoTipoPersona(valorEntradaBase,festival);
    var precio = valorEntradaBase + valorExtraPorNoche - descuentoTipoPersona;
-   
-   println("Dia de compra " + fechaCompra.dayOfMonth())
-   println("Dia de la noche " + noche.fecha.dayOfMonth())
+
    var dtoAnticipada = festival.calcularDescuentoAnticipa(precio, noche,this.fechaCompra);
    
    
