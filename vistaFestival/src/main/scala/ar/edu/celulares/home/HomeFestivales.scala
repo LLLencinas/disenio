@@ -1,5 +1,6 @@
 package ar.edu.celulares.home
 
+import scala.collection.JavaConversions._
 
 import domain.Noche
 import domain.Banda

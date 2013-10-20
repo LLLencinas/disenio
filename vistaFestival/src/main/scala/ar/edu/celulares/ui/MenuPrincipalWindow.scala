@@ -31,7 +31,7 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
       .onClick(new MessageSend(this,"venderEntrada"))
 
     new Button(actionsPanel) //
-      .setCaption("Nuevo Celular")
+      .setCaption("Anular Entrada")
       .onClick(new MessageSend(this, "anularEntrada"))
   }
   

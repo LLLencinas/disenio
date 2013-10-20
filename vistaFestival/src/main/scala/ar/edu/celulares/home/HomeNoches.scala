@@ -1,5 +1,6 @@
 package ar.edu.celulares.home
 
+import scala.collection.JavaConversions._
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConverters._
 import org.uqbar.commons.model.CollectionBasedHome
@@ -41,11 +42,11 @@ object HomeNoches extends CollectionBasedHome[Noche] {
     23, 6, List[Banda](HomeBandas.get("los autenticos decadentes")), HomeButacas.butacas);
 
   def create(unFestival: Festival, unaFecha: DateTime, unaHora: Int, unId: Int,
-    lasBandas: List[Banda], lasButacas: java.util.List[Butaca]): Unit = {
+    lasBandas: List[Banda], lasButacas: Seq[Butaca]): Unit = {
 
     /*Es muuuuuy turbio lo que hice en la linea de abajo con las butacas, sino no me dejaba*/
     var noche = new Noche(unFestival, unaFecha, unaHora, unId,
-      lasBandas, lasButacas.asScala.toList);
+      lasBandas, lasButacas.toList);
     this.create(noche)
   }
 
@@ -86,7 +87,7 @@ object HomeNoches extends CollectionBasedHome[Noche] {
   
   /**------Filtros por Festival  - End --------**/
 
-  def noches: java.util.List[Noche] = allInstances
+  def noches: Seq[Noche] = allInstances
 
   override def getEntityType = classOf[Noche]
 

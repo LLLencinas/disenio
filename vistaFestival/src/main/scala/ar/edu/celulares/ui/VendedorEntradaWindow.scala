@@ -77,13 +77,15 @@ class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada]
     var selectorNoche= new Selector[Noche](form)
     selectorNoche.allowNull(false)
     selectorNoche.bindValueToProperty("noche")
-    var propiedadNoche= selectorNoche.bindItems(new ObservableProperty(HomeNoches, "noches"))
+    var propiedadNoche= selectorNoche.bindItemsToProperty("nochesDisponibles")
+    selectorNoche.setWidth(150)
     
     new Label(form).setText("Sector")
     var selectorSector= new Selector[Sector](form)
     selectorSector.allowNull(false)
     selectorSector.bindValueToProperty("sector")
     var propiedadSector= selectorSector.bindItems(new ObservableProperty(HomeSectores, "sectores"))
+    
     
     new Label(form).setText("Fila")
     var selectorFila = new Selector[Fila](form)
@@ -95,7 +97,8 @@ class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada]
     var selectorButaca= new Selector[Butaca](form)
     selectorButaca.allowNull(false)
     selectorButaca.bindValueToProperty("butaca")
-    var propiedadButaca= selectorButaca.bindItems(new ObservableProperty(HomeButacas, "butacas"))
+    var propiedadButaca= selectorButaca.bindItemsToProperty( "butacasDisponibles")
+    selectorButaca.setWidth(120)
     
     
     

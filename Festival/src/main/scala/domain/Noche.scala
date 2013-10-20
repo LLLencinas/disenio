@@ -44,7 +44,11 @@ class Noche(unFestival: Festival,unaFecha:DateTime,unaHora:Int, unId :Int,
 	override def toString():String = {
 	  return fecha.getYear() + "-" +
 	  fecha.getMonthOfYear() + "-" +
-	  fecha.getDayOfMonth() + " ( " + festival.nombre + " )"
+	  fecha.getDayOfMonth() + {
+	    if(festival !=null)
+	    " ( " +festival.nombre + " )"
+	    else
+	      ""}
 	  //Seguramente se puede hacer mas facil y mejor 
 	}
 }
