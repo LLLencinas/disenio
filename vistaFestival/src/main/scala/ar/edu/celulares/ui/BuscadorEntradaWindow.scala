@@ -1,4 +1,4 @@
-package ar.edu.celulares.ui
+//package ar.edu.celulares.ui
 
 import java.awt.Color
 import org.uqbar.arena.actions.MessageSend
@@ -22,6 +22,7 @@ import org.uqbar.arena.bindings.ObservableProperty
 import ar.edu.celulares.home.HomeClientes
 import domain.Entrada
 import ar.edu.celulares.controller.FechaTransformer
+import ar.edu.celulares.ui._
 
 abstract class BuscadorEntradaWindow(parent: WindowOwner, model: BuscadorEntrada) extends BuscadorAbstractoWindow(parent, model) {
 
