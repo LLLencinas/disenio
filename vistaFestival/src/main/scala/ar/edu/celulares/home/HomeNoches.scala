@@ -36,7 +36,16 @@ object HomeNoches extends CollectionBasedHome[Noche] {
   /** Noches del DiciembreFest**/
 
   this.create(HomeFestivales.get("diciembreFest"), new DateTime("2013-12-26"),
-    23, 6, List[Banda](HomeBandas.get("los autenticos decadentes")), HomeButacas.butacas);
+    23, 6, List[Banda](HomeBandas.get("los autenticos decadentes"),HomeBandas.get("callejeros")), HomeButacas.butacas);
+  
+  this.create(HomeFestivales.get("diciembreFest"), new DateTime("2013-12-27"),
+    22, 7, List[Banda](HomeBandas.get("la Vela Puerca")), HomeButacas.butacas);
+  
+  this.create(HomeFestivales.get("diciembreFest"), new DateTime("2013-12-28"),
+    21, 8, List[Banda](HomeBandas.get("callejeros"), HomeBandas.get("Los Rolling Stone")), HomeButacas.butacas);
+  
+  
+  
 
   def create(unFestival: Festival, unaFecha: DateTime, unaHora: Int, unId: Int,
     lasBandas: List[Banda], lasButacas: Seq[Butaca]): Unit = {

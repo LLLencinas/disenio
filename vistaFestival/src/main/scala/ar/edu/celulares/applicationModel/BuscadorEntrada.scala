@@ -7,35 +7,56 @@ import domain.Entrada
 import ar.edu.celulares.home.HomeEntradas
 import org.joda.time.DateTime
 
-/**
- * Application model que representa la búsqueda de {@link Entrada}.
- */
 
 @org.uqbar.commons.utils.Observable
-class BuscadorEntrada extends Serializable {
+abstract class BuscadorEntrada extends Buscador {
   
-  
+  // Para mi esto no anda porque faltan los atributos cuando se busca pro punto de venta.
   var nombreCliente:String= ""
   var fechaDesde:String = ""
   var fechaHasta:String=""
+  var nombrePuestoDeVenta:String=""
+  var nombreFestival:String=""
+    
   var resultados: java.util.List[Entrada] = _
   var entradaSeleccionada: Entrada = _
 
-  // ********************************************************
-  // ** Acciones
-  // ********************************************************
   def search() = {
     resultados = new ArrayList[Entrada]   
-    resultados = HomeEntradas.search(nombreCliente, fechaDesde,fechaHasta)
+    resultados = this.buscarEntrada() //Cada subclase lo define, algo asi como un ""Template Method"" CREO
   }
 
   def clear() = {
     
-    nombreCliente="";
-    fechaDesde="";
-    fechaHasta="";
-      
-
+    nombreCliente=""
+    fechaDesde=""
+    fechaHasta=""
+    nombrePuestoDeVenta=""
+    nombreFestival=""
   }
+  
+  def buscarEntrada():Seq[Entrada];
 
 }
+
+@org.uqbar.commons.utils.Observable
+class BuscadorEntradaPorCliente extends BuscadorEntrada{
+  
+  def buscarEntrada():Seq[Entrada] ={
+    return HomeEntradas.search(nombreCliente, fechaDesde,fechaHasta)
+    
+  }
+}
+
+@org.uqbar.commons.utils.Observable
+class BuscadorEntradaPorPuntoDeVenta extends BuscadorEntrada{
+  
+  def buscarEntrada():Seq[Entrada] ={
+    return HomeEntradas.searchPuestoFestival(nombrePuestoDeVenta,nombreFestival)
+    
+  }
+}
+
+
+
+

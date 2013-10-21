@@ -1,6 +1,5 @@
 package ar.edu.celulares.ui
 
-
 import java.awt.Color
 import org.uqbar.arena.actions.MessageSend
 import org.uqbar.arena.bindings.NotNullObservable
@@ -24,121 +23,86 @@ import ar.edu.celulares.home.HomeClientes
 import domain.Entrada
 import ar.edu.celulares.controller.FechaTransformer
 
+abstract class BuscadorEntradaWindow(parent: WindowOwner, model: BuscadorEntrada) extends BuscadorAbstractoWindow(parent, model) {
 
-/**
- * Ventana de búsqueda de celulares.
- *
- * @see BuscadorCelular el modelo subyacente.
- *
- * @author ?
- */
-class BuscadorEntradaWindow(parent: WindowOwner) extends Dialog[BuscadorEntrada](parent, new BuscadorEntrada) {
-
-  getModelObject.search()
-
-  
-  override def createMainTemplate(mainPanel: Panel) = {
-    this.setTitle("Buscador")
-    this.setTaskDescription("Ingrese los parametros de busqueda")
-
-    super.createMainTemplate(mainPanel)
-
-    this.createResultsGrid(mainPanel)
-  }
-
-  // *************************************************************************
-  // * FORMULARIO DE BUSQUEDA
-  // *************************************************************************
-  /**
-   * El panel principal de busqueda permite filtrar un par de cosas
-   */
-  override def createFormPanel(mainPanel: Panel) = {
-    var searchFormPanel = new Panel(mainPanel)
-    searchFormPanel.setLayout(new ColumnLayout(2))
-
-    var labelNombreCliente = new Label(searchFormPanel)
-    labelNombreCliente.setText("Nombre de Cliente:")
-    labelNombreCliente.setForeground(Color.BLUE)
-    
-    new TextBox(searchFormPanel).bindValueToProperty("nombreCliente")	
-
-    var labelFechaDesde = new Label(searchFormPanel)
-    labelFechaDesde.setText("Fecha desde(AAAA-MM-DD):")
-    labelFechaDesde.setForeground(Color.BLUE)
-    
-    new TextBox(searchFormPanel).bindValueToProperty("fechaDesde")					
-    
-    var labelFechaHasta= new Label(searchFormPanel)
-    labelFechaHasta.setText("Fecha hasta(AAAA-MM-DD):")
-    labelFechaHasta.setForeground(Color.BLUE)
-    
-    new TextBox(searchFormPanel).bindValueToProperty("fechaHasta")					
-  }
-
-  /**
-   * Acciones asociadas de la pantalla principal
-   */
-  override def addActions(actionsPanel: Panel) {
-    new Button(actionsPanel)
-      .setCaption("Buscar")
-      .onClick(new MessageSend(getModelObject, "search"))
-      .setAsDefault
-      .disableOnError
-
-    new Button(actionsPanel) //
-      .setCaption("Limpiar")
-      .onClick(new MessageSend(getModelObject, "clear"))
-  }
-
-  // *************************************************************************
-  // ** RESULTADOS DE LA BUSQUEDA
-  // *************************************************************************
   def createResultsGrid(mainPanel: Panel) {
     var table = new Table[Entrada](mainPanel, classOf[Entrada])
-    table.setHeigth(200)
-    table.setWidth(500)
-    table.bindItemsToProperty("resultados")						
+    table.setHeigth(250)
+    table.setWidth(600)
+    table.bindItemsToProperty("resultados")
     this.describeResultsGrid(table)
   }
 
-  /**
-   * Define las columnas de la grilla Cada columna se puede bindear 1) contra una propiedad del model, como
-   * en el caso del número o el nombre 2) contra un transformer que recibe el model y devuelve un tipo
-   * (generalmente String), como en el caso de Recibe Resumen de Cuenta
-   *
-   * @param table
-   */
   def describeResultsGrid(table: Table[Entrada]) {
     new Column[Entrada](table) //
       .setTitle("Nro de Factura")
       .setFixedSize(70)
       .bindContentsToProperty("nroFactura")
-      
+
     new Column[Entrada](table) //
       .setTitle("Cliente")
+      .setFixedSize(150)
+      .bindContentsToProperty("nombreCliente")
+
+    new Column[Entrada](table) //
+      .setTitle("Punto De Venta")
       .setFixedSize(100)
-      .bindContentsToProperty("nombreCliente")		
+      .bindContentsToProperty("puestoDeVenta")
 
     new Column[Entrada](table) //
       .setTitle("Fecha")
       .setFixedSize(100)
-      .bindContentsToTransformer(new FechaTransformer)						
+      .bindContentsToTransformer(new FechaTransformer)
 
     new Column[Entrada](table)
       .setTitle("Festival")
       .setFixedSize(120)
-      .bindContentsToProperty("festival")							
-      
-   new Column[Entrada](table)
+      .bindContentsToProperty("festival")
+
+    new Column[Entrada](table)
       .setTitle("Precio")
       .setFixedSize(70)
-      .bindContentsToProperty("precioDeVenta")   						
-
+      .bindContentsToProperty("precioDeVenta")
   }
+}
 
-  // ********************************************************
-  // ** Acciones
-  // ********************************************************
+class BuscadorEntradaXClienteYFechaWindow(parent: WindowOwner, model: BuscadorEntrada) extends BuscadorEntradaWindow(parent, model) {
+  
+   def agregarBotonesParaBusqueda(panelBusqueda: Panel) {
 
+    var labelNombreCliente = new Label(panelBusqueda)
+    labelNombreCliente.setText("Nombre de Cliente:")
+    labelNombreCliente.setForeground(Color.BLUE)
+    new TextBox(panelBusqueda).bindValueToProperty("nombreCliente")
+
+    var labelFechaDesde = new Label(panelBusqueda)
+    labelFechaDesde.setText("Fecha desde(AAAA-MM-DD):")
+    labelFechaDesde.setForeground(Color.BLUE)
+    new TextBox(panelBusqueda).bindValueToProperty("fechaDesde")
+
+    var labelFechaHasta = new Label(panelBusqueda)
+    labelFechaHasta.setText("Fecha hasta(AAAA-MM-DD):")
+    labelFechaHasta.setForeground(Color.BLUE)
+    new TextBox(panelBusqueda).bindValueToProperty("fechaHasta")
   }
+}
+
+class BuscadorEntradaXPuntoDeVentaYFestival(parent: WindowOwner, model: BuscadorEntrada) extends BuscadorEntradaWindow(parent, model) {
+  
+   def agregarBotonesParaBusqueda(panelBusqueda: Panel) {
+
+    var labelNombrePuestoDeVenta = new Label(panelBusqueda)
+    labelNombrePuestoDeVenta.setText("Puesto De Venta:")
+    labelNombrePuestoDeVenta.setForeground(Color.BLUE)
+    new TextBox(panelBusqueda).bindValueToProperty("nombrePuestoDeVenta")
+
+    var labelNombreFestival = new Label(panelBusqueda)
+    labelNombreFestival.setText("Festival")
+    labelNombreFestival.setForeground(Color.BLUE)
+    new TextBox(panelBusqueda).bindValueToProperty("nombreFestival")
+  }
+}
+
+
+
 
