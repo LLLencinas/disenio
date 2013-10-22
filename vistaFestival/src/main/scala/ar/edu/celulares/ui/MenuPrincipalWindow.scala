@@ -11,8 +11,9 @@ import ar.edu.celulares.applicationModel.MostradorEntrada
 import ar.edu.celulares.applicationModel.BuscadorEntrada
 import ar.edu.celulares.applicationModel.BuscadorEntradaPorCliente
 import ar.edu.celulares.applicationModel.BuscadorEntradaPorPuntoDeVenta
-import ar.edu.celulares.applicationModel.BuscadorBanda
-import ar.edu.celulares.applicationModel.BuscadorBandaPorNombre
+import ar.edu.celulares.applicationModel.BuscadorFestival
+import ar.edu.celulares.applicationModel.BuscadorFestivalPorNombre
+
 
 package ar.edu.celulares.ui{
 
@@ -28,7 +29,10 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
 
   override def createFormPanel(mainPanel: Panel) = {}
 
+  
+  
   override def addActions(actionsPanel: Panel) {
+    
     new Button(actionsPanel)
       .setCaption("Preview De Entrada X")
       .onClick(new MessageSend(this, "mostrarEntradaHarco"));
@@ -50,8 +54,8 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
       .onClick(new MessageSend(this, "buscarEntradasDePuntosDeVenta"));
     
     new Button(actionsPanel) //
-      .setCaption("Bandas")
-      .onClick(new MessageSend(this, "buscarBandasXNombre"));
+      .setCaption("Bandas x Festival")
+      .onClick(new MessageSend(this, "buscarFestivalXNombre"));
 
   }
 
@@ -77,13 +81,16 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
     this.openDialog(new BuscadorEntradaXPuntoDeVentaYFestival(this, new BuscadorEntradaPorPuntoDeVenta))
   }
   
-  def buscarBandasXNombre() {
-    this.openDialog(new BuscadorBandaXNombreWindow(this, new BuscadorBandaPorNombre))
+  def buscarFestivalXNombre() {
+    this.openDialog(new BuscadorFestivalPorNombreWindow(this, new BuscadorFestivalPorNombre))
   }
+  
 
   def openDialog(dialog: Dialog[_]) {
     dialog.open
   }
 
+
+  
 }
 }

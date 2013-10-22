@@ -47,7 +47,6 @@ object HomeFestivales extends CollectionBasedHome[Festival] {
     this.create(noviembreFest)
   }
   
-
   def search(nombre: String = "") = {
     festivales.filter { festival => this.coincide(festival.nombre, nombre) }
   }
@@ -61,9 +60,6 @@ object HomeFestivales extends CollectionBasedHome[Festival] {
   def get(nombre: String = ""): Festival =
     festivales.find(festival => this.coincide(festival.nombre, nombre)).getOrElse(null) // Acá hay que pensar algo.
   
-  
-  
-
   def festivales: java.util.List[Festival] = allInstances
 
   override def getEntityType = classOf[Festival]

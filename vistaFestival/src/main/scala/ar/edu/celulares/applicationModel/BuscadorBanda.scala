@@ -40,6 +40,7 @@ class BuscadorBandaPorNombre extends BuscadorBanda{
   }
 }
 
+
 //@org.uqbar.commons.utils.Observable
 //class BuscadorEntradaPorPuntoDeVenta extends BuscadorEntrada{
 //  

@@ -9,6 +9,8 @@ import org.uqbar.commons.utils.ApplicationContext
 
 import domain.Banda
 import domain.Categoria
+//import domain.Festival
+//import domain.Noche
 
 @Observable
 object HomeBandas extends CollectionBasedHome[Banda]  {
@@ -29,6 +31,15 @@ object HomeBandas extends CollectionBasedHome[Banda]  {
   def search(nombre:String = "") = {
     bandas.filter { banda => this.coincide(banda.nombre, nombre) }
   }
+  
+  /*def searchXFestival(nombre:String = "", festival:Festival)  = {
+    var ban: List[Banda] = List.empty[Banda];
+    for(noche <- festival.noches){
+      ban=ban.++(noche.bandas)
+    } 
+    ban=ban.removeDuplicates
+    bandas.filter { banda => this.coincide(banda.nombre, nombre) }
+  }*/
 
   def coincide(valorPosta: String, valorEntrante:String): Boolean = {
     if (valorEntrante == "") 
@@ -36,11 +47,11 @@ object HomeBandas extends CollectionBasedHome[Banda]  {
     return valorPosta.toString().toLowerCase().contains(valorEntrante.toString().toLowerCase())
   }
   
-  
   def get(nombre:String = ""): Banda=
     bandas.find(banda => this.coincide(banda.nombre,nombre)).getOrElse(null) // Acá hay que pensar algo.
 
   def bandas: java.util.List[Banda] = allInstances
+
 
   override def getEntityType = classOf[Banda]
 
