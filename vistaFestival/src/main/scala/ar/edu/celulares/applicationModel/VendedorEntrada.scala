@@ -105,10 +105,12 @@ class VendedorEntrada extends Serializable {
  def agregarEntrada() = {
 	var entrada = new EntradaComun(puestoDeVenta,new Cliente(nombre,apellido,"","naranaa"),tipoDeCliente,noche,butaca, new DateTime())
 	entradas = entradas.+:(entrada)
+	HomeButacas.delete(entrada.butaca)
 	clearEntrada()
  }
  
  def eliminarEntradaSeleccionada() ={
+   HomeButacas.create(entradaSeleccionada.butaca)
    entradas = entradas.-(entradaSeleccionada)
  }
  

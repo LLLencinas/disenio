@@ -70,7 +70,7 @@ class MenuPrincipalWindow(parent: WindowOwner) extends SimpleWindow[MostradorEnt
   }
 
   def anularEntrada() {
-    this.openDialog(new MostradorEntradaWindow(this))
+    this.openDialog(new BuscadorEntradaxClienteWindow(this, new BuscadorEntradaPorCliente))
   }
 
   def buscarEntradasDeClientes() {

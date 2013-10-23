@@ -5,6 +5,7 @@ import java.util.ArrayList
 import collection.JavaConversions._
 import domain.Entrada
 import ar.edu.celulares.home.HomeEntradas
+import ar.edu.celulares.home.HomeButacas
 import org.joda.time.DateTime
 
 
@@ -46,6 +47,13 @@ class BuscadorEntradaPorCliente extends BuscadorEntrada{
     return HomeEntradas.search(nombreCliente, fechaDesde,fechaHasta)
     
   }
+  
+  def anularSeleccionada() {
+   HomeEntradas.delete(entradaSeleccionada) 
+   HomeButacas.create(entradaSeleccionada.butaca)
+   resultados = resultados.-(entradaSeleccionada)
+  
+   }
 }
 
 @org.uqbar.commons.utils.Observable

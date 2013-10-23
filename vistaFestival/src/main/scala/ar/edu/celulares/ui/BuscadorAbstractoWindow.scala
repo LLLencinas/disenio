@@ -60,3 +60,5 @@ abstract class BuscadorAbstractoWindow(parent: WindowOwner,model: Buscador) exte
 
 
   }
+
+

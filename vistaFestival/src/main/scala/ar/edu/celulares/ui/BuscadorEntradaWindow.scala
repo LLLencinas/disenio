@@ -31,6 +31,7 @@ abstract class BuscadorEntradaWindow(parent: WindowOwner, model: BuscadorEntrada
     table.setHeigth(250)
     table.setWidth(600)
     table.bindItemsToProperty("resultados")
+    table.bindValueToProperty("entradaSeleccionada")
     this.describeResultsGrid(table)
   }
 
@@ -67,15 +68,26 @@ abstract class BuscadorEntradaWindow(parent: WindowOwner, model: BuscadorEntrada
   }
 }
 
-class BuscadorEntradaXClienteYFechaWindow(parent: WindowOwner, model: BuscadorEntrada) extends BuscadorEntradaWindow(parent, model) {
-  
-   def agregarBotonesParaBusqueda(panelBusqueda: Panel) {
-
-    var labelNombreCliente = new Label(panelBusqueda)
+class BuscadorEntradaxClienteWindow(parent:WindowOwner,model:BuscadorEntrada) extends BuscadorEntradaWindow(parent,model){
+  def agregarBotonesParaBusqueda(panelBusqueda: Panel) {  
+  var labelNombreCliente = new Label(panelBusqueda)
     labelNombreCliente.setText("Nombre de Cliente:")
     labelNombreCliente.setForeground(Color.BLUE)
     new TextBox(panelBusqueda).bindValueToProperty("nombreCliente")
+  }
+  
+  override def addActions(actionsPanel: Panel) {
+	super.addActions(actionsPanel)
+	 new Button(actionsPanel) //
+      .setCaption("Anular Seleccionada")
+      .onClick(new MessageSend(getModelObject, "anularSeleccionada"))
+  }
+}
 
+class BuscadorEntradaXClienteYFechaWindow(parent: WindowOwner, model: BuscadorEntrada) extends BuscadorEntradaxClienteWindow(parent, model) {
+  
+   override def agregarBotonesParaBusqueda(panelBusqueda: Panel) {
+    super.agregarBotonesParaBusqueda(panelBusqueda)
     var labelFechaDesde = new Label(panelBusqueda)
     labelFechaDesde.setText("Fecha desde(AAAA-MM-DD):")
     labelFechaDesde.setForeground(Color.BLUE)

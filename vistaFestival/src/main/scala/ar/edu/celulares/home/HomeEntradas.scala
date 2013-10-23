@@ -131,5 +131,10 @@ object HomeEntradas extends CollectionBasedHome[Entrada] {
       this.create(entrada)
 
   }
+  
+  def deleteEntradas(pedido:Pedido) {
+    for (entrada <- pedido._entradas)
+      this.delete(entrada)
+  }
 
 }

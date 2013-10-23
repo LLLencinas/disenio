@@ -9,6 +9,7 @@ import org.uqbar.commons.utils.ApplicationContext
 import domain.Butaca
 import domain.Sector
 import domain.Fila
+import domain._
 
 @Observable
 object HomeButacas extends CollectionBasedHome[Butaca]  {
@@ -56,6 +57,12 @@ object HomeButacas extends CollectionBasedHome[Butaca]  {
       HomeFilas.createExample,1000)
 
   override def getCriterio(example: Butaca) = null
+  
+  def deleteButacas(pedido:Pedido) {
+    for (entrada<- pedido._entradas){
+      this.delete(entrada.butaca)
+    }
+  }
   
   
   
