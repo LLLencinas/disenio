@@ -20,7 +20,7 @@ class Pedido(unPuesto:PuestoDeVenta, unCliente: Cliente, unTipoDePago:TipoDePago
 	  var entradaComun = new EntradaComun( _puestoDeVenta, _cliente, unTipoCliente, unaNoche, unaButaca, _fechaDeCompra)
 	  
 	  //La asignacion del nro de factura podria estar en el constructor de entrada. FIXME
-	  entradaComun.nroFactura = NroFactura.SacarNroFactura;
+	  
 	  _entradas=_entradas.+:(entradaComun);
 	  return true;
 	}

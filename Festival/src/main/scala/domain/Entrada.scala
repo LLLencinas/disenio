@@ -18,7 +18,7 @@ abstract class Entrada(unPuesto:PuestoDeVenta, uncliente: Cliente, unTipoCliente
 	var tipoCliente: TipoCliente= unTipoCliente;
 	var noche: Noche= unaNoche;
 	var butaca: Butaca= unaButaca;
-	var nroFactura : Int=_;
+	var nroFactura : Int= NroFactura.SacarNroFactura;
 	var precioDeVenta: Double=_;
 	var fechaCompra: DateTime = fechaDeCompra
 	var devuelta: Boolean = false;

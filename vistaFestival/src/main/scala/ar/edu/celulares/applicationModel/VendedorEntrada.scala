@@ -4,7 +4,13 @@ import scala.collection.JavaConversions._
 import domain.Entrada
 import ar.edu.celulares.home.HomeEntradas
 import ar.edu.celulares.home.HomeEntradas
+import domain._
 import domain.Cliente
+import domain.Entrada
+import domain.EntradaComun
+import org.joda.time._
+import org.joda.convert._
+import domain.EntradaVIP
 import domain.Noche
 import domain.Butaca
 import java.util.Date
@@ -16,6 +22,13 @@ import domain.Festival
 import ar.edu.celulares.home.HomeNoches
 import ar.edu.celulares.home.HomeButacas
 import domain.PuestoDeVenta
+import scala.collection.JavaConversions.asScalaBuffer
+import scala.collection.JavaConverters._
+import scala.collection.mutable.ListBuffer
+import java.util.Collections
+import java.util.ArrayList
+import ar.edu.celulares.home.HomeEntradas
+
 
 
 
@@ -27,7 +40,8 @@ class VendedorEntrada extends Serializable {
   var tipoDePago: TipoDePago = _
   var nombre: String = _
   var apellido: String = _
-  var entradas: List[Entrada] = _
+  var entradas: JList[Entrada] = List.empty[Entrada]
+  var entradaSeleccionada: Entrada = _
   var _festival: Festival = _
   var puestoDeVenta:PuestoDeVenta=_
   
@@ -73,7 +87,7 @@ class VendedorEntrada extends Serializable {
     tipoDePago = null
     nombre = null
     apellido = null
-    entradas = null
+    entradas = List.empty[Entrada]
     festival = null
     clearEntrada()
   }
@@ -88,6 +102,26 @@ class VendedorEntrada extends Serializable {
     precioDeVenta = 0.0
   }
 
+ def agregarEntrada() = {
+	var entrada = new EntradaComun(puestoDeVenta,new Cliente(nombre,apellido,"","naranaa"),tipoDeCliente,noche,butaca, new DateTime())
+	entradas = entradas.+:(entrada)
+	clearEntrada()
+ }
+ 
+ def eliminarEntradaSeleccionada() ={
+   entradas = entradas.-(entradaSeleccionada)
+ }
+ 
+ def comprarEntradas() = {
+   var entradasPedido = List.empty[Entrada]
+   var pedido = new Pedido(puestoDeVenta, new Cliente(nombre,apellido,"","naranaa"), tipoDePago,DateTime.now());
+   for (entradaAAgregar <- entradas){
+     entradasPedido = entradasPedido.+:(entradaAAgregar)
+   }
+   pedido._entradas = entradasPedido
+   HomeEntradas.createEntradas(pedido)
+   clearTodo()
+ }
   
   
   

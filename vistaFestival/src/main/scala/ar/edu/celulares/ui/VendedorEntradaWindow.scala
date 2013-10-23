@@ -32,6 +32,14 @@ import ar.edu.celulares.home.HomeSectores
 import ar.edu.celulares.home.HomeButacas
 import domain.Butaca
 import ar.edu.celulares.home.HomePuestosDeVenta
+import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
+import domain.Entrada
+import domain.EntradaComun
+import domain.EntradaVIP
+import org.uqbar.arena.bindings.NotNullObservable
+import org.uqbar.arena.layout.ColumnLayout
+import org.uqbar.arena.layout.HorizontalLayout
 
 class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada](parent, new VendedorEntrada) {
 
@@ -42,6 +50,9 @@ class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada]
     this.setTaskDescription("Ingrese los datos necesarios para generar la entrada")
 
     super.createMainTemplate(mainPanel)
+    
+    this.createResultsGrid(mainPanel)
+    this.createGridActions(mainPanel)
 
   }
 
@@ -128,14 +139,86 @@ class VendedorEntradaWindow(parent: WindowOwner) extends Dialog[VendedorEntrada]
     //Creo un label por cada informacion que tenga de la entrada
   }
 
+  
+  def createResultsGrid(mainPanel: Panel) {
+    var table = new Table[Entrada](mainPanel, classOf[Entrada])
+    table.setHeigth(200)
+    table.setWidth(450)
+    table.bindItemsToProperty("entradas")
+    table.bindValueToProperty("entradaSeleccionada")
+    this.describeResultsGrid(table)
+  }
+
+  /**
+   * Define las columnas de la grilla Cada columna se puede bindear 1) contra una propiedad del model, como
+   * en el caso del número o el nombre 2) contra un transformer que recibe el model y devuelve un tipo
+   * (generalmente String), como en el caso de Recibe Resumen de Cuenta
+   *
+   * @param table
+   */
+  def describeResultsGrid(table: Table[Entrada]) {
+       
+   new Column[Entrada](table) //
+      .setTitle("Nro de Factura")
+      .setFixedSize(70)
+      .bindContentsToProperty("nroFactura")
+
+    new Column[Entrada](table) //
+      .setTitle("Cliente")
+      .setFixedSize(150)
+      .bindContentsToProperty("nombreCliente")
+
+    new Column[Entrada](table) //
+      .setTitle("Punto De Venta")
+      .setFixedSize(100)
+      .bindContentsToProperty("puestoDeVenta")
+
+    new Column[Entrada](table)
+      .setTitle("Festival")
+      .setFixedSize(120)
+      .bindContentsToProperty("festival")
+
+    new Column[Entrada](table)
+      .setTitle("Precio")
+      .setFixedSize(70)
+      .bindContentsToProperty("precioDeVenta")
+  }
+
+  def createGridActions(mainPanel: Panel) {
+    var actionsPanel = new Panel(mainPanel)
+    actionsPanel.setLayout(new HorizontalLayout)
+    var remove = new Button(actionsPanel)
+      .setCaption("Borrar Entrada")
+      .onClick(new MessageSend(getModelObject, "eliminarEntradaSeleccionada"))
+      
+    var comprar = new Button(actionsPanel)
+      .setCaption("Comprar Entradas")
+      .onClick(new MessageSend(getModelObject, "comprarEntradas"))
+
+    // Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
+    var elementSelected = new NotNullObservable("entradaSeleccionada")
+    remove.bindEnabled(elementSelected)
+  }
+  
   override def addActions(actions: Panel) = {
     new Button(actions)
-      .setCaption("Aceptar")
-      .onClick(new MessageSend(this, "accept"))
+      .setCaption("Agregar Entrada")
+      .onClick(new MessageSend(getModelObject, "agregarEntrada"))
       .setAsDefault.disableOnError
+     
+    new Button(actions)
+      .setCaption("Limpiar Cliente")
+      .onClick(new MessageSend(getModelObject, "clearTodo"))
+      .setAsDefault.disableOnError 
+      
+     new Button(actions)
+      .setCaption("Limpiar Entrada")
+      .onClick(new MessageSend(getModelObject, "clearEntrada"))
+      .setAsDefault.disableOnError     
+      
 
     new Button(actions) //
-      .setCaption("Cancelar")
+      .setCaption("Salir")
       .onClick(new MessageSend(this, "cancel"))
   }
 
