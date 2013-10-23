@@ -20,7 +20,7 @@ import ar.edu.celulares.applicationModel.Buscador
 
 abstract class BuscadorAbstractoWindow(parent: WindowOwner,model: Buscador) extends Dialog[Buscador](parent, model) {
 
-  getModelObject.search()
+	getModelObject.search()
   
   override def createMainTemplate(mainPanel: Panel) = {
     this.setTitle("Buscador")

@@ -8,6 +8,7 @@ class Banda(unCategoria:Categoria,unNombre:String) extends Entity{
 	var _categoria:Categoria = unCategoria;
 	var nombre: String = unNombre;
 	
+	def cat = _categoria.toString;
 	
 	def categoria = _categoria;
 	def categoria(unaCategoria: Categoria){

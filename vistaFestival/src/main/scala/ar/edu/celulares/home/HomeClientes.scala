@@ -28,7 +28,7 @@ object HomeClientes extends CollectionBasedHome[Cliente]  {
     this.create(cliente)
   }
   
-  def search(nombre:String = "", apellido:String = ""){
+  def search(nombre:String = "", apellido:String = "") ={
     clientes.filter { cliente => this.coincide(cliente._nombre, nombre) && this.coincide(cliente._apellido, apellido)  }
     }
   

@@ -3,7 +3,7 @@ package ar.edu.celulares.applicationModel
 import scala.collection.JavaConversions._
 import domain.Entrada
 import ar.edu.celulares.home.HomeEntradas
-import ar.edu.celulares.home.HomeEntradas
+import ar.edu.celulares.home._
 import domain._
 import domain.Cliente
 import domain.Entrada
@@ -27,7 +27,6 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 import java.util.Collections
 import java.util.ArrayList
-import ar.edu.celulares.home.HomeEntradas
 
 
 
@@ -122,6 +121,7 @@ class VendedorEntrada extends Serializable {
    }
    pedido._entradas = entradasPedido
    HomeEntradas.createEntradas(pedido)
+   HomeClientes.create(nombre,apellido,"","")
    clearTodo()
  }
   

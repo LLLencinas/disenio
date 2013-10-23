@@ -31,10 +31,25 @@ object HomeEntradas extends CollectionBasedHome[Entrada] {
   }
 
   def search(nombreCliente: String = "", fechaDesde: String = "", fechaHasta: String = "") = {
-    entradas.filter { entrada =>
+   entradas.filter { entrada =>
       this.coincide(nombreCliente, entrada.cliente.toString) &&
         this.coincideFechas(entrada.fechaCompra, fechaDesde, fechaHasta)
     }
+  }
+  
+  def buscarEntradasFestival(nombreCliente: String ,unFestival: Festival):Seq[Entrada] = {
+   entradas.filter { entrada =>
+      	this.coincide(unFestival, entrada.festival) && this.coincide(nombreCliente,entrada.cliente.toString())
+    }
+  }
+  
+  def dameFestivales(nombreCliente:String,unFestival:Festival): Seq[Festival] = {
+	  return buscarEntradasFestival(nombreCliente,unFestival).map(unaEntrada => unaEntrada.festival)
+  }
+  
+  def dameBandas(nombreCliente:String,unFestival:Festival): Seq[Banda] = {
+	  dameFestivales(nombreCliente:String,unFestival:Festival).foldLeft(List.empty[Banda]){( lista, unFestival )=> lista.++(unFestival.bandas)
+	  }
   }
 
   def coincide(expectedValue: Any, realValue: Any): Boolean = {
