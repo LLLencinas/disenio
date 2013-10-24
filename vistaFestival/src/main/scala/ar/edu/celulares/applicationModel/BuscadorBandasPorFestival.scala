@@ -9,22 +9,20 @@ import scala.collection.JavaConverters._
 import scala.collection.mutable.ListBuffer
 
 
+@org.uqbar.commons.utils.Observable
 class BuscadorBandasPorFestival(unCliente:Cliente) extends Buscador {
   var festival:Festival = _
-  var cliente = unCliente
-  var resultados: java.util.List[Banda] = _
+  val cliente = unCliente
+  var resultados: java.util.List[Banda] = List.empty[Banda]
   var bandaSeleccionada: Banda = _
   
   def search(){
-   resultados = new ArrayList[Banda]
-   var r1 = HomeEntradas.buscarEntradasFestival(cliente.toString(),festival)
+    resultados = new ArrayList[Banda] 
    resultados = HomeEntradas.dameBandas(cliente.toString(), festival)
-   var larala = resultados.length
-   var o = 0
   }
   
   def clear(){
-  
+   festival = null
   }
   
 }

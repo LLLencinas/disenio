@@ -50,7 +50,7 @@ class VendedorEntrada extends Serializable {
   def festival = _festival
   def festival_=(unFestival: Festival) {
     _festival = unFestival
-    nochesDisponibles = HomeNoches.noches.filter { _.festival == festival }
+    nochesDisponibles = HomeNoches.noches.filter{unaNoche=> HomeEntradas.coincide(_festival, unaNoche.festival) }
   }
   
   def fila = _fila
@@ -117,6 +117,7 @@ class VendedorEntrada extends Serializable {
    var entradasPedido = List.empty[Entrada]
    var pedido = new Pedido(puestoDeVenta, new Cliente(nombre,apellido,"","naranaa"), tipoDePago,DateTime.now());
    for (entradaAAgregar <- entradas){
+     HomeEntradas.create(entradaAAgregar)
      entradasPedido = entradasPedido.+:(entradaAAgregar)
    }
    pedido._entradas = entradasPedido

@@ -17,31 +17,33 @@ import domain._
 object HomeNoches extends CollectionBasedHome[Noche] {
 
   /** Noches del NoviembreFest**/
-
-  this.create(HomeFestivales.get("noviembreFest"), new DateTime("2013-12-20"),
+ var festival1 = new Festival("noviembreFest")
+ var festival2 = new Festival("diciembreFest")
+  
+  this.create(festival1, new DateTime("2013-12-20"),
     20, 1, List[Banda](HomeBandas.get("Los Piojos")), HomeButacas.butacas);
 
-  this.create(HomeFestivales.get("noviembreFest"), new DateTime("2013-12-21"),
+  this.create(festival1, new DateTime("2013-12-21"),
     20, 2, List[Banda](HomeBandas.get("arbol")), HomeButacas.butacas);
 
-  this.create(HomeFestivales.get("noviembreFest"), new DateTime("2013-12-22"),
+  this.create(festival1, new DateTime("2013-12-22"),
     19, 3, List[Banda](HomeBandas.get("la Vela Puerca"), HomeBandas.get("NTVG")), HomeButacas.butacas);
 
-  this.create(HomeFestivales.get("noviembreFest"), new DateTime("2013-12-23"),
+  this.create(festival1, new DateTime("2013-12-23"),
     19, 4, List[Banda](HomeBandas.get("callejeros"), HomeBandas.get("Los Rolling Stone")), HomeButacas.butacas);
 
-  this.create(HomeFestivales.get("noviembreFest"), new DateTime("2013-12-24"),
+  this.create(festival1, new DateTime("2013-12-24"),
     21, 5, List[Banda](HomeBandas.get("los autenticos decadentes")), HomeButacas.butacas);
 
   /** Noches del DiciembreFest**/
 
-  this.create(HomeFestivales.get("diciembreFest"), new DateTime("2013-12-26"),
+  this.create(festival2, new DateTime("2013-12-26"),
     23, 6, List[Banda](HomeBandas.get("los autenticos decadentes"),HomeBandas.get("callejeros")), HomeButacas.butacas);
   
-  this.create(HomeFestivales.get("diciembreFest"), new DateTime("2013-12-27"),
-    22, 7, List[Banda](HomeBandas.get("la Vela Puerca")), HomeButacas.butacas);
+  this.create(festival2, new DateTime("2013-12-27"),
+    22, 7, List[Banda](HomeBandas.get("E")), HomeButacas.butacas);
   
-  this.create(HomeFestivales.get("diciembreFest"), new DateTime("2013-12-28"),
+  this.create(festival2, new DateTime("2013-12-28"),
     21, 8, List[Banda](HomeBandas.get("callejeros"), HomeBandas.get("Los Rolling Stone")), HomeButacas.butacas);
   
   

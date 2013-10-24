@@ -59,14 +59,16 @@ class BuscadorClienteWindow(parent: WindowOwner, model: BuscadorCliente) extends
   }
   
    def agregarBotonesParaBusqueda(panelBusqueda: Panel){
+     
+     
 	var labelNombreCliente = new Label(panelBusqueda)
     labelNombreCliente.setText("Nombre de Cliente:")
     labelNombreCliente.setForeground(Color.BLUE)
     new TextBox(panelBusqueda).bindValueToProperty("nombreCliente")
     
     var labelApellidoCliente = new Label(panelBusqueda)
-    labelNombreCliente.setText("Apellido de Cliente:")
-    labelNombreCliente.setForeground(Color.BLUE)
+    labelApellidoCliente.setText("Apellido de Cliente:")
+    labelApellidoCliente.setForeground(Color.BLUE)
     new TextBox(panelBusqueda).bindValueToProperty("apellidoCliente")
     
     new Button(panelBusqueda)
@@ -80,6 +82,6 @@ class BuscadorClienteWindow(parent: WindowOwner, model: BuscadorCliente) extends
   }
    
    def buscarBandasPorFestival(){
-     this.openDialog(new BuscadorBandasPorFestivalWindow(this,new BuscadorBandasPorFestival((getModelObject.asInstanceOf[BuscadorCliente]).clienteSeleccionado)))
+     this.openDialog(new BuscadorBandasPorFestivalWindow(this,new BuscadorBandasPorFestival(model.clienteSeleccionado)))
      }
 }

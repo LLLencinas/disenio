@@ -9,8 +9,8 @@ import org.uqbar.commons.utils.ApplicationContext
 
 import domain.Banda
 import domain.Categoria
-//import domain.Festival
-//import domain.Noche
+import domain.Festival
+import domain.Noche
 
 @Observable
 object HomeBandas extends CollectionBasedHome[Banda]  {
@@ -22,6 +22,7 @@ object HomeBandas extends CollectionBasedHome[Banda]  {
   this.create(HomeCategorias.get(2), "Callejeros");
   this.create(HomeCategorias.get(3), "Los Autenticos Decadentes");
   this.create(HomeCategorias.get(4), "Los Rolling Stone");
+  this.create(HomeCategorias.get(2), "El Chori");
   
   def create(unCategoria:Categoria,unNombre:String) {
     var banda= new Banda(unCategoria, unNombre)
@@ -32,13 +33,18 @@ object HomeBandas extends CollectionBasedHome[Banda]  {
     bandas.filter { banda => this.coincide(banda.nombre, nombre) }
   }
   
-  /*def searchXFestival(nombre:String = "", festival:Festival)  = {
+
+
+  
+
+  
+ /* def searchXFestival(nombre:String = "", festival:Festival)  = {
     var ban: List[Banda] = List.empty[Banda];
-    for(noche <- festival.noches){
-      ban=ban.++(noche.bandas)
-    } 
-    ban=ban.removeDuplicates
-    bandas.filter { banda => this.coincide(banda.nombre, nombre) }
+    HomeNoches.noches.filter{noche => this.coincide(noche.festival.nombre, festival.nombre)}
+    .foreach{
+      noche=> ban ++= (noche.bandas)
+    }
+    ban.removeDuplicates
   }*/
 
   def coincide(valorPosta: String, valorEntrante:String): Boolean = {
@@ -47,8 +53,9 @@ object HomeBandas extends CollectionBasedHome[Banda]  {
     return valorPosta.toString().toLowerCase().contains(valorEntrante.toString().toLowerCase())
   }
   
-  def get(nombre:String = ""): Banda=
-    bandas.find(banda => this.coincide(banda.nombre,nombre)).getOrElse(null) // Acá hay que pensar algo.
+  def get(nombre:String = ""): Banda= {
+   return bandas.find(banda => this.coincide(banda.nombre,nombre)).getOrElse(null) }
+  // Acá hay que pensar algo.
 
   def bandas: java.util.List[Banda] = allInstances
 

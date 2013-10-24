@@ -38,18 +38,20 @@ object HomeEntradas extends CollectionBasedHome[Entrada] {
   }
   
   def buscarEntradasFestival(nombreCliente: String ,unFestival: Festival):Seq[Entrada] = {
-   entradas.filter { entrada =>
-      	this.coincide(unFestival, entrada.festival) && this.coincide(nombreCliente,entrada.cliente.toString())
+   return entradas.filter { entrada =>
+      	this.coincide(unFestival, entrada.festival.toString() ) && this.coincide(nombreCliente,entrada.cliente.toString())
     }
   }
   
-  def dameFestivales(nombreCliente:String,unFestival:Festival): Seq[Festival] = {
-	  return buscarEntradasFestival(nombreCliente,unFestival).map(unaEntrada => unaEntrada.festival)
+  def dameNoches(nombreCliente:String,unFestival:Festival):Seq[Noche] = {
+	return buscarEntradasFestival(nombreCliente,unFestival).map(unaEntrada => unaEntrada.noche)
+
   }
   
-  def dameBandas(nombreCliente:String,unFestival:Festival): Seq[Banda] = {
-	  dameFestivales(nombreCliente:String,unFestival:Festival).foldLeft(List.empty[Banda]){( lista, unFestival )=> lista.++(unFestival.bandas)
-	  }
+  def dameBandas(nombreCliente:String,unFestival:Festival): List[Banda] = {
+	return dameNoches(nombreCliente:String,unFestival:Festival).foldLeft(List.empty[Banda]){( lista:List[Banda], unaNoche )=> lista.++(unaNoche.bandas)
+	  }.removeDuplicates
+
   }
 
   def coincide(expectedValue: Any, realValue: Any): Boolean = {

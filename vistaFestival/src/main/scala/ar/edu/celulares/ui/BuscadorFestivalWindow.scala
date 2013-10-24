@@ -66,7 +66,7 @@ abstract class BuscadorFestivalWindow(parent: WindowOwner, model: BuscadorFestiv
 class BuscadorFestivalPorNombreWindow(parent: WindowOwner, model: BuscadorFestival) extends BuscadorFestivalWindow(parent, model) {
   
   def buscarBandasXNombre() {
-    this.openDialog(new BuscadorBandaXNombreWindow(this, new BuscadorBandaPorNombre()))
+    this.openDialog(new BuscadorBandaXNombreWindow(this, new BuscadorBandaPorNombre(model.seleccionFestival)))
   }
   
   def openDialog(dialog: Dialog[_]) {

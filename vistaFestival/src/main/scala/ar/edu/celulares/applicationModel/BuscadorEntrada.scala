@@ -4,8 +4,7 @@ package ar.edu.celulares.applicationModel
 import java.util.ArrayList
 import collection.JavaConversions._
 import domain.Entrada
-import ar.edu.celulares.home.HomeEntradas
-import ar.edu.celulares.home.HomeButacas
+import ar.edu.celulares.home._
 import org.joda.time.DateTime
 
 
