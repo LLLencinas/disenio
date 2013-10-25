@@ -102,10 +102,11 @@ class VendedorEntrada extends Serializable {
   }
 
  def agregarEntrada() = {
+   if (!(butaca==null || tipoDeCliente==null || noche==null || puestoDeVenta==null)){ 
 	var entrada = new EntradaComun(puestoDeVenta,new Cliente(nombre,apellido,"","naranaa"),tipoDeCliente,noche,butaca, new DateTime())
 	entradas = entradas.+:(entrada)
 	HomeButacas.delete(entrada.butaca)
-	clearEntrada()
+	clearEntrada()}
  }
  
  def eliminarEntradaSeleccionada() ={

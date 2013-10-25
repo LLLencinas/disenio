@@ -18,7 +18,9 @@ class BuscadorBandasPorFestival(unCliente:Cliente) extends Buscador {
   
   def search(){
     resultados = new ArrayList[Banda] 
-   resultados = HomeEntradas.dameBandas(cliente.toString(), festival)
+    var nomCli:String=""
+      if (cliente!=null) nomCli=cliente.toString()
+   resultados = HomeEntradas.dameBandas(nomCli, festival)
   }
   
   def clear(){

@@ -53,7 +53,9 @@ object HomeFestivales extends CollectionBasedHome[Festival] {
   }
   
   def searchBandasFestival(festival:Festival):Seq[Banda] ={
-    var n1= this.search(festival.nombre)
+    var nom:String=""
+    if (festival!=null) nom= festival.nombre
+    var n1= this.search(nom)
     var r1 = n1.map{unFestival=> unFestival.noches}.flatten
     var r2 = r1.map{unaNoche => unaNoche.bandas}.flatten
     return r2

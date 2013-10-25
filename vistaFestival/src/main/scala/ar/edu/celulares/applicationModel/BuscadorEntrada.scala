@@ -48,10 +48,11 @@ class BuscadorEntradaPorCliente extends BuscadorEntrada{
   }
   
   def anularSeleccionada() {
+   if (entradaSeleccionada!=null){
    HomeEntradas.delete(entradaSeleccionada) 
    HomeButacas.create(entradaSeleccionada.butaca)
    resultados = resultados.-(entradaSeleccionada)
-  
+   }
    }
 }
 
