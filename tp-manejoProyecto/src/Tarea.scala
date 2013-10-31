@@ -18,5 +18,8 @@ class Tarea(_tiempo:Integer, _complejidad:ComplejidadMinima, _impuesto:List[Impu
 	def obtenerTiempo():Integer = {
 	  return tiempo;
 	}
+	def tieneConTiempoMenorA(cantDias:Integer):Boolean ={
+	  return tiempo<cantDias;
+	}
 	
 }

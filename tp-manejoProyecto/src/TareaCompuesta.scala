@@ -25,6 +25,8 @@ class TareaCompuesta(_tiempo:Integer, _complejidad:ComplejidadMinima, _impuesto:
 	  	{ tarea => _tiempo=_tiempo + tarea.obtenerTiempo() }
 	  return _tiempo;
 	}
-	
+	override def tieneConTiempoMenorA(cantDias:Integer):Boolean ={
+	  return obtenerTiempo()<cantDias;
+	}
 
 }
