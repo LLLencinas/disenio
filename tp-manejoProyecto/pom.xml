@@ -3,6 +3,12 @@
   <groupId>tp-manejoProyecto</groupId>
   <artifactId>tp-manejoProyecto</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+<parent>
+                <groupId>org.uqbar-project</groupId>
+                <artifactId>uqbar-scala-parent</artifactId>
+                <version>1.0</version>
+        </parent>  
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
